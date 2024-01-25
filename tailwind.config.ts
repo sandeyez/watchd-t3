@@ -1,13 +1,18 @@
 import { type Config } from "tailwindcss";
-import { fontFamily } from "tailwindcss/defaultTheme";
 
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
     extend: {
-      fontFamily: {
-        sans: ["var(--font-sans)", ...fontFamily.sans],
+      colors: {
+        primaryBlue: "#101724",
+        secondaryBlue: "#1D253C",
+        mainLightBlue: "#1FD2FF",
+        mainPink: "#D478FF",
       },
+      gridTemplateColumns: {
+        nav: "1fr auto 1fr"
+      }
     },
   },
   plugins: [],
