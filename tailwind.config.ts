@@ -8,6 +8,12 @@ export default {
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },
+      colors: {
+        'primary': '#101724',
+        'secondary': '#1D253C',
+        'graidentBlue': '#1FD2FF',
+        'gradientPink': '#AB62FF'
+      }
     },
   },
   plugins: [],

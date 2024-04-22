@@ -1,0 +1,71 @@
+import Image from 'next/image';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {type IconDefinition, faHome, faFilm, faStar, faSearch} from '@fortawesome/free-solid-svg-icons'
+import Link from 'next/link';
+import { getServerAuthSession } from '~/server/auth';
+
+type NavItemProps = {
+    icon: IconDefinition;
+    title: string;
+    href: string;
+};
+
+function NavItem({href, icon, title} : NavItemProps) : JSX.Element {
+  return (
+    <Link href={href} className='flex gap-3 items-center text-white'>
+        <FontAwesomeIcon icon={icon} className='w-4 h-4 '/>
+        <span className='font-semibold'>{title}</span>
+    </Link>
+  );
+}
+
+const navItems: NavItemProps[] = [
+    {
+        icon: faHome,
+        title: 'Home',
+        href: '/'
+    }, 
+    {
+        icon: faFilm,
+        title: 'Discover',
+        href: '/discover'
+    }, 
+    {
+        icon: faStar,
+        title: 'Watchlist',
+        href: '/watchlist'
+    }, 
+    {
+        icon: faSearch,
+        title: 'Search',
+        href: '/search'
+    }
+];
+
+async function Navbar() {
+    const session = await getServerAuthSession();
+
+  return (
+<nav className="py-8 px-5 bg-primary grid grid-cols-[1fr_auto_1fr]">
+    <Image src='./logo.svg' width={143} height={54} alt="Watchd logo"/>
+    <div className="flex justify-center items-center gap-12">
+      {
+        navItems.map((item, index) => (
+          <NavItem key={index} {...item}/>
+        ))
+      }
+    </div>
+    <div className='flex items-center justify-end'>
+        {
+            session ? (
+            <Link href="/profile" className="text-white">Profile</Link>
+            ) : (
+            <Link href="/login" className="text-white">Login</Link>
+            )
+        }
+    </div>
+  </nav>
+  );
+}
+
+export default Navbar;
