@@ -46,8 +46,10 @@ async function Navbar() {
     const session = await getServerAuthSession();
 
   return (
-<nav className="py-8 px-5 bg-primary grid grid-cols-[1fr_auto_1fr]">
-    <Image src='./logo.svg' width={143} height={54} alt="Watchd logo"/>
+  <nav className="py-8 px-5 bg-primary grid grid-cols-[1fr_auto_1fr]">
+    <Link href='/'>
+      <Image src='./logo.svg' width={143} height={54} alt="Watchd logo"/>
+    </Link>
     <div className="flex justify-center items-center gap-12">
       {
         navItems.map((item, index) => (

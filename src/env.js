@@ -22,6 +22,9 @@ export const env = createEnv({
       // VERCEL_URL doesn't include `https` so it cant be validated as a URL
       process.env.VERCEL ? z.string() : z.string().url()
     ),
+    TMDB_API_KEY: z.string(),
+    TMDB_API_ACCESS_TOKEN: z.string(),
+    TMDB_API_BASE_URL: z.string().url(),
   },
 
   /**
@@ -42,6 +45,9 @@ export const env = createEnv({
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
+    TMDB_API_KEY: process.env.TMDB_API_KEY,
+    TMDB_API_ACCESS_TOKEN: process.env.TMDB_API_ACCESS_TOKEN,
+    TMDB_API_BASE_URL: process.env.TMDB_API_BASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

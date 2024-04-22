@@ -22,6 +22,7 @@
     "@trpc/client": "next",
     "@trpc/react-query": "next",
     "@trpc/server": "next",
+    "axios": "^1.6.8",
     "drizzle-orm": "^0.29.4",
     "next": "^14.2.1",
     "next-auth": "^4.24.6",
