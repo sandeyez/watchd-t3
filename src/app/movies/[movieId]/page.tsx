@@ -54,7 +54,7 @@ function MoviePoster({altText, posterPath, budget, revenue, productionCompanies}
                                 <Image
                                     src={TMDB.getImageUrl({
                                         path: mainProductionCompany?.logo_path ?? '',
-                                        size: 'w92',
+                                        size: 'w185',
                                         type: 'logo'
                                     })}
                                     alt={mainProductionCompany?.name ?? ''}
@@ -66,15 +66,15 @@ function MoviePoster({altText, posterPath, budget, revenue, productionCompanies}
                         </div>
                             <div className='flex flex-col gap-2'>
                                 <div className='flex flex-col'>
-                                    <span className='text-xs'>Production company</span>
+                                    <span className='text-xs font-bold'>Production company</span>
                                     <span>{productionCompanies[0]?.name}</span>
                                 </div>
                                 <div className='flex flex-col'>
-                                    <span className='text-xs'>Budget</span>
+                                    <span className='text-xs font-bold'>Budget</span>
                                     <span>{formatCurrency(budget)}</span>
                                 </div>
                                 <div className='flex flex-col'>
-                                    <span className='text-xs'>Revenue</span>
+                                    <span className='text-xs font-bold'>Revenue</span>
                                     <span>{formatCurrency(revenue)}</span>
                                 </div>
                             </div>
