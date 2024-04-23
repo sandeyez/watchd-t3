@@ -24,9 +24,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`font-sans ${poppins.variable}`}>
+      <body className={`flex flex-col font-sans bg-secondary text-white ${poppins.variable}`}>
         <Navbar />
-        <TRPCReactProvider>{children}</TRPCReactProvider>
+        <div className="flex-grow">
+          <TRPCReactProvider>{children}</TRPCReactProvider>
+        </div>
       </body>
     </html>
   );

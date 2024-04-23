@@ -25,6 +25,8 @@ export const env = createEnv({
     TMDB_API_KEY: z.string(),
     TMDB_API_ACCESS_TOKEN: z.string(),
     TMDB_API_BASE_URL: z.string().url(),
+    TMDB_IMAGE_BASE_URL: z.string().url(),
+
   },
 
   /**
@@ -48,6 +50,7 @@ export const env = createEnv({
     TMDB_API_KEY: process.env.TMDB_API_KEY,
     TMDB_API_ACCESS_TOKEN: process.env.TMDB_API_ACCESS_TOKEN,
     TMDB_API_BASE_URL: process.env.TMDB_API_BASE_URL,
+    TMDB_IMAGE_BASE_URL: process.env.TMDB_IMAGE_BASE_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

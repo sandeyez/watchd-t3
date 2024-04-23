@@ -13,7 +13,7 @@ export default {
         'secondary': '#1D253C',
         'graidentBlue': '#1FD2FF',
         'gradientPink': '#AB62FF'
-      }
+      },
     },
   },
   plugins: [],

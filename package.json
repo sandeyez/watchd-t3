@@ -7,7 +7,7 @@
     "build": "next build",
     "db:push": "drizzle-kit push:pg",
     "db:studio": "drizzle-kit studio",
-    "dev": "next dev",
+    "dev": "nvm use & next dev",
     "lint": "next lint",
     "start": "next start"
   },
@@ -24,6 +24,7 @@
     "@trpc/server": "next",
     "axios": "^1.6.8",
     "drizzle-orm": "^0.29.4",
+    "framer-motion": "^11.1.7",
     "next": "^14.2.1",
     "next-auth": "^4.24.6",
     "postgres": "^3.4.3",

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {type IconDefinition, faHome, faFilm, faStar, faSearch} from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link';
 import { getServerAuthSession } from '~/server/auth';
+import 'server-only'
 
 type NavItemProps = {
     icon: IconDefinition;
@@ -14,7 +15,7 @@ function NavItem({href, icon, title} : NavItemProps) : JSX.Element {
   return (
     <Link href={href} className='flex gap-3 items-center text-white'>
         <FontAwesomeIcon icon={icon} className='w-4 h-4 '/>
-        <span className='font-semibold'>{title}</span>
+        <span className='font-semibold text-sm'>{title}</span>
     </Link>
   );
 }
@@ -46,9 +47,9 @@ async function Navbar() {
     const session = await getServerAuthSession();
 
   return (
-  <nav className="py-8 px-5 bg-primary grid grid-cols-[1fr_auto_1fr]">
-    <Link href='/'>
-      <Image src='./logo.svg' width={143} height={54} alt="Watchd logo"/>
+  <nav className="py-6 px-4 bg-primary grid grid-cols-[1fr_auto_1fr]">
+    <Link href='/' className='flex items-center'>
+      <Image src='/logo.svg' width={120} height={24} alt="Watchd logo"/>
     </Link>
     <div className="flex justify-center items-center gap-12">
       {
