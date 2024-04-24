@@ -29,8 +29,6 @@ type GetImageUrlProps = {
 
 export default class TMDB {
     static async getMovie({ movieId }: { movieId: string }) {
-        await new Promise((resolve) => setTimeout(resolve, 500));
-
         const res = await axios.get(
             `${env.TMDB_API_BASE_URL}/movie/${movieId}?language=en-US`,
             {

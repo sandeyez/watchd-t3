@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 
 import { TRPCReactProvider } from "~/trpc/react";
 import Navbar from "./_components/Navbar/Navbar";
+import { type Metadata } from "next";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -11,10 +12,14 @@ const poppins = Poppins({
     weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
-export const metadata = {
-    title: "Watchd",
+export const metadata: Metadata = {
+    title: { template: "%s | Watchd", default: "Watchd" },
     description: "Extending your movie experience in ways you can't imagine.",
     icons: [{ rel: "icon", url: "/favicon.ico" }],
+    appleWebApp: {
+        statusBarStyle: "black-translucent",
+        capable: true,
+    },
 };
 
 export default function RootLayout({

@@ -5,6 +5,7 @@ import { Button } from "~/components/ui/button";
 import TMDB from "~/server/models/tmdb";
 import { formatCurrency } from "~/utils/format";
 import MovieMetadata from "./_components/MovieMetadata";
+import { type Metadata, type ResolvingMetadata } from "next";
 
 type MovieBackdropProps = {
     backdropPath: string;
@@ -182,6 +183,37 @@ function MovieCast({ cast }: MovieCastProps) {
             </div>
         </div>
     );
+}
+
+export async function generateMetadata(
+    { params }: { params: { movieId: string } },
+    parent: ResolvingMetadata,
+): Promise<Metadata> {
+    const { movieId } = params;
+
+    const movie = await TMDB.getMovie({ movieId });
+
+    // optionally access and extend (rather than replace) parent metadata
+    const previousImages = (await parent).openGraph?.images ?? [];
+
+    return {
+        title: movie.title,
+        openGraph: {
+            images: [
+                TMDB.getImageUrl({
+                    type: "backdrop",
+                    size: "w780",
+                    path: movie.backdrop_path,
+                }),
+                TMDB.getImageUrl({
+                    type: "poster",
+                    size: "w780",
+                    path: movie.poster_path,
+                }),
+                ...previousImages,
+            ],
+        },
+    };
 }
 
 export default async function MoviePage({
