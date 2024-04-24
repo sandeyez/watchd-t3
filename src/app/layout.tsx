@@ -2,7 +2,6 @@ import "~/styles/globals.css";
 
 import { Poppins } from "next/font/google";
 
-import { TRPCReactProvider } from "~/trpc/react";
 import Navbar from "./_components/Navbar/Navbar";
 import { type Metadata } from "next";
 
@@ -33,9 +32,7 @@ export default function RootLayout({
                 className={`flex flex-col bg-secondary font-sans text-white ${poppins.variable}`}
             >
                 <Navbar />
-                <div className="flex-grow">
-                    <TRPCReactProvider>{children}</TRPCReactProvider>
-                </div>
+                <div className="flex-grow">{children}</div>
             </body>
         </html>
     );
