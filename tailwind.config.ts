@@ -18,10 +18,13 @@ const config = {
             },
         },
         extend: {
+            fontFamily: {
+                sans: "var(--font-sans)",
+            },
             colors: {
                 primary: "#101724",
                 secondary: "#1D253C",
-                graidentBlue: "#1FD2FF",
+                gradientBlue: "#1FD2FF",
                 gradientPink: "#AB62FF",
                 border: "hsl(var(--border))",
                 input: "hsl(var(--input))",
