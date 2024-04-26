@@ -4,6 +4,7 @@ import TMDB, { type TMDBImageSizes } from "~/server/models/tmdb";
 import { formatCurrency } from "~/utils/format";
 import "./MoviePoster.css";
 import clsx from "clsx";
+import PosterPlaceholder from "~/app/_components/Placeholders/PosterPlaceholder";
 
 type MoviePosterProps = {
     posterPath: Movie["poster_path"];
@@ -39,18 +40,19 @@ export default function MoviePoster(props: MoviePosterProps) {
             })}
         >
             <div className="movie-poster__inner relative h-full w-full rounded-lg">
-                <div className="movie-poster__front h-full w-full rounded-lg object-cover">
-                    {posterPath && (
+                <div className="movie-poster__front h-full w-full overflow-hidden rounded-lg">
+                    {posterPath ? (
                         <Image
                             src={TMDB.getImageUrl({
                                 path: posterPath,
                                 type: "poster",
                                 size: imageSize,
                             })}
-                            alt={altText}
                             width={228}
                             height={342}
+                            alt={altText}
                             priority
+                            className="h-full w-full object-cover"
                             placeholder="blur"
                             blurDataURL={TMDB.getImageUrl({
                                 path: posterPath,
@@ -58,6 +60,8 @@ export default function MoviePoster(props: MoviePosterProps) {
                                 size: "w92",
                             })}
                         />
+                    ) : (
+                        <PosterPlaceholder altText={altText} />
                     )}
                 </div>
                 {allowFlip && (
