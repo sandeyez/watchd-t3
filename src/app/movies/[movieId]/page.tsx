@@ -16,9 +16,9 @@ type MovieBackdropProps = {
 
 function MovieBackdrop({ backdropPath }: MovieBackdropProps) {
     return (
-        <div className="pointer-events-none absolute left-0 top-0 h-96 w-full">
+        <div className="pointer-events-none fixed left-0 top-0 -z-[1000] h-[50vh] w-full">
             <div className="absolute -z-20 h-full w-full overflow-hidden">
-                <div className=" h-full w-full blur-[2px]">
+                <div className="h-full w-full blur-[2px]">
                     <Image
                         src={TMDB.getImageUrl({
                             type: "backdrop",

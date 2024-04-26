@@ -29,7 +29,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`flex flex-col bg-secondary font-sans text-white ${poppins.variable}`}
+                className={`flex flex-col bg-secondary font-sans text-white ${poppins.variable} overscroll-none`}
             >
                 <Navbar />
                 <div className="flex-grow">{children}</div>
