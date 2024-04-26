@@ -1,10 +1,10 @@
 import { type Movie } from "~/server/schemas/tmdb";
 import Image from "next/image";
-import TMDB, { type TMDBImageSizes } from "~/server/models/tmdb";
 import { formatCurrency } from "~/utils/format";
 import "./MoviePoster.css";
 import clsx from "clsx";
 import PosterPlaceholder from "~/app/_components/Placeholders/PosterPlaceholder";
+import { ImageHelper, type TMDBImageSizes } from "~/server/models/imageHelper";
 
 type MoviePosterProps = {
     posterPath: Movie["poster_path"];
@@ -43,7 +43,7 @@ export default function MoviePoster(props: MoviePosterProps) {
                 <div className="movie-poster__front h-full w-full overflow-hidden rounded-lg">
                     {posterPath ? (
                         <Image
-                            src={TMDB.getImageUrl({
+                            src={ImageHelper.getImageUrl({
                                 path: posterPath,
                                 type: "poster",
                                 size: imageSize,
@@ -54,7 +54,7 @@ export default function MoviePoster(props: MoviePosterProps) {
                             priority
                             className="h-full w-full object-cover"
                             placeholder="blur"
-                            blurDataURL={TMDB.getImageUrl({
+                            blurDataURL={ImageHelper.getImageUrl({
                                 path: posterPath,
                                 type: "poster",
                                 size: "w92",
@@ -119,7 +119,7 @@ export default function MoviePoster(props: MoviePosterProps) {
                                 <div className="mx-auto hidden h-32 w-full items-center justify-center rounded-md bg-white p-2 md:flex">
                                     <div className="relative h-16 w-full">
                                         <Image
-                                            src={TMDB.getImageUrl({
+                                            src={ImageHelper.getImageUrl({
                                                 path:
                                                     props.productionCompany
                                                         ?.logo_path ?? "",

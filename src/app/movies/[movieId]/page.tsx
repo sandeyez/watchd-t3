@@ -8,6 +8,8 @@ import TMDB from "~/server/models/tmdb";
 import { type Movie, type MovieCredits } from "~/server/schemas/tmdb";
 import MovieMetadata from "./_components/MovieMetadata/MovieMetadata";
 import MoviePoster from "./_components/MoviePoster/MoviePoster";
+import ScrollableMovieList from "./_components/ScrollableMovieList/ScrollableMovieList";
+import { ImageHelper } from "~/server/models/imageHelper";
 // import { useRef } from "react";
 
 type MovieBackdropProps = {
@@ -20,7 +22,7 @@ function MovieBackdrop({ backdropPath }: MovieBackdropProps) {
             <div className="absolute -z-20 h-full w-full overflow-hidden">
                 <div className="h-full w-full blur-[2px]">
                     <Image
-                        src={TMDB.getImageUrl({
+                        src={ImageHelper.getImageUrl({
                             type: "backdrop",
                             path: backdropPath,
                             size: "w1280",
@@ -30,7 +32,7 @@ function MovieBackdrop({ backdropPath }: MovieBackdropProps) {
                         className="object-cover"
                         priority
                         placeholder="blur"
-                        blurDataURL={TMDB.getImageUrl({
+                        blurDataURL={ImageHelper.getImageUrl({
                             type: "backdrop",
                             path: backdropPath,
                             size: "w300",
@@ -80,7 +82,7 @@ function MovieCast({ cast }: MovieCastProps) {
                             <div className="max-h-12 min-h-12 min-w-12 max-w-12 overflow-hidden rounded-full">
                                 {profile_path ? (
                                     <Image
-                                        src={TMDB.getImageUrl({
+                                        src={ImageHelper.getImageUrl({
                                             path: profile_path,
                                             type: "profile",
                                             size: "w185",
@@ -126,12 +128,12 @@ export async function generateMetadata(
             images:
                 movie.backdrop_path && movie.poster_path
                     ? [
-                          TMDB.getImageUrl({
+                          ImageHelper.getImageUrl({
                               type: "backdrop",
                               size: "w780",
                               path: movie.backdrop_path,
                           }),
-                          TMDB.getImageUrl({
+                          ImageHelper.getImageUrl({
                               type: "poster",
                               size: "w780",
                               path: movie.poster_path,
@@ -182,10 +184,7 @@ export default async function MoviePage({
             <MovieButtons />
 
             <MovieCast cast={credits.cast} />
-            <div
-                className="flex max-w-full flex-col gap-8"
-                // ref={middleContainerRef}
-            >
+            <div className="flex max-w-full flex-col gap-8">
                 <article>
                     <h2 className="text-lg font-bold">Description</h2>
                     <p className="text-justify text-sm">{movie.overview}</p>
@@ -193,32 +192,11 @@ export default async function MoviePage({
 
                 <article>
                     <h2 className="text-lg font-bold">Recommended movies</h2>
-                    <div className="relative">
-                        <div
-                            className="flex max-h-96 gap-2 overflow-x-scroll"
-                            style={
-                                {
-                                    // width: middleContainerRef.current?.clientWidth,
-                                }
-                            }
-                        >
-                            {recommendations.results
-                                .filter(
-                                    ({ media_type }) => media_type === "movie",
-                                )
-                                .map(({ id, title, poster_path }) => (
-                                    <div key={id} className="flex-grow">
-                                        <MoviePoster
-                                            posterPath={poster_path}
-                                            allowFlip={false}
-                                            imageSize="w342"
-                                            altText={`${title} poster`}
-                                        />
-                                    </div>
-                                ))}
-                        </div>
-                        <div className="pointer-events-none absolute left-0 top-0 h-full w-full bg-gradient-to-r from-secondary/0 via-secondary/0 to-secondary/100"></div>
-                    </div>
+                    <ScrollableMovieList
+                        results={recommendations.results.filter(
+                            ({ media_type }) => media_type === "movie",
+                        )}
+                    />
                 </article>
             </div>
         </>
