@@ -2,12 +2,13 @@
 
 import { motion } from "framer-motion";
 import Tag from "~/app/_components/Tag/Tag";
+import { type Movie } from "~/server/schemas/tmdb";
 
 type MovieMetadataProps = {
-    title: string;
-    tagline: string;
+    title: Movie["title"];
+    tagline: Movie["tagline"];
     releaseDate: Date;
-    genres: { id: number; name: string }[];
+    genres: Movie["genres"];
 };
 
 export default function MovieMetadata({
@@ -22,9 +23,11 @@ export default function MovieMetadata({
                 <h1 className="gradient-text text-3xl font-bold">{title}</h1>
             </div>
 
-            <span className="font-extralight italic">
-                &quot;{tagline}&quot;
-            </span>
+            {tagline && (
+                <span className="font-extralight italic">
+                    &quot;{tagline}&quot;
+                </span>
+            )}
             <motion.div
                 className="group flex w-fit"
                 initial="initial"

@@ -17,9 +17,10 @@ export default function test() {
             {/* Buttons */}
             <div className="flex flex-col justify-end gap-4">
                 <Skeleton className="flex h-10 w-full" />
-                <div className="flex gap-4">
-                    <Skeleton />
-                    <Skeleton />
+                <div className="flex gap-2">
+                    <Skeleton className="h-10 w-10" />
+                    <Skeleton className="h-10 w-10" />
+                    <Skeleton className="h-10 w-10" />
                 </div>
             </div>
             {/* Cast */}

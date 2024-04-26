@@ -11,7 +11,7 @@ export const movieSchema = z.object({
     ),
     id: z.number(),
     overview: z.string(),
-    poster_path: z.string(),
+    poster_path: z.string().nullable(),
     production_companies: z.array(
         z.object({
             id: z.number(),
@@ -23,10 +23,12 @@ export const movieSchema = z.object({
     release_date: z.string(),
     revenue: z.number(),
     status: z.string(),
-    tagline: z.string(),
+    tagline: z.string().nullable(),
     title: z.string(),
     video: z.boolean(),
 });
+
+export type Movie = z.infer<typeof movieSchema>;
 
 export const movieCreditsSchema = z.object({
     id: z.number(),
@@ -46,4 +48,23 @@ export const movieCreditsSchema = z.object({
             job: z.string(),
         }),
     ),
+});
+
+export type MovieCredits = z.infer<typeof movieCreditsSchema>;
+
+export const movieRecommendationsSchema = z.object({
+    page: z.number(),
+    results: z.array(
+        z.object({
+            backdrop_path: z.string().nullable(),
+            id: z.number(),
+            media_type: z.string(),
+            overview: z.string(),
+            poster_path: z.string().nullable(),
+            release_date: z.string(),
+            title: z.string(),
+        }),
+    ),
+    total_pages: z.number(),
+    total_results: z.number(),
 });

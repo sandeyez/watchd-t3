@@ -1,14 +1,17 @@
 import { faEarth, faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { type Metadata, type ResolvingMetadata } from "next";
 import Image from "next/image";
+import PersonPlaceholder from "~/app/_components/Placeholders/PersonPlaceholder";
 import { Button } from "~/components/ui/button";
 import TMDB from "~/server/models/tmdb";
-import { formatCurrency } from "~/utils/format";
-import MovieMetadata from "./_components/MovieMetadata";
-import { type Metadata, type ResolvingMetadata } from "next";
+import { type Movie, type MovieCredits } from "~/server/schemas/tmdb";
+import MovieMetadata from "./_components/MovieMetadata/MovieMetadata";
+import MoviePoster from "./_components/MoviePoster/MoviePoster";
+// import { useRef } from "react";
 
 type MovieBackdropProps = {
-    backdropPath: string;
+    backdropPath: Movie["backdrop_path"];
 };
 
 function MovieBackdrop({ backdropPath }: MovieBackdropProps) {
@@ -26,97 +29,16 @@ function MovieBackdrop({ backdropPath }: MovieBackdropProps) {
                         layout="fill"
                         className="object-cover"
                         priority
+                        placeholder="blur"
+                        blurDataURL={TMDB.getImageUrl({
+                            type: "backdrop",
+                            path: backdropPath,
+                            size: "w300",
+                        })}
                     />
                 </div>
             </div>
             <div className="absolute left-0 top-0 -z-10 h-full w-full bg-gradient-to-b from-primary/70 to-secondary" />
-        </div>
-    );
-}
-
-type MoviePosterProps = {
-    posterPath: string;
-    altText: string;
-    budget: number;
-    revenue: number;
-    director: string | undefined;
-    productionCompany:
-        | {
-              name: string;
-              logo_path: string | null;
-          }
-        | undefined;
-};
-
-function MoviePoster({
-    altText,
-    director,
-    posterPath,
-    budget,
-    revenue,
-    productionCompany,
-}: MoviePosterProps) {
-    return (
-        <div className="movie-poster aspect-[2/3] overflow-hidden">
-            <div className="movie-poster__inner relative h-full w-full rounded-lg">
-                <Image
-                    src={TMDB.getImageUrl({
-                        path: posterPath,
-                        type: "poster",
-                        size: "w342",
-                    })}
-                    alt={altText}
-                    width={228}
-                    height={342}
-                    className="movie-poster__front h-full w-full rounded-lg object-contain"
-                    priority
-                />
-                <div className="movie-poster__back h-full w-full overflow-hidden rounded-lg">
-                    <div className="flex h-full w-full flex-col justify-between gap-2 bg-primary p-4">
-                        <div className="mx-auto hidden h-32 w-full items-center justify-center rounded-md bg-white p-2 md:flex">
-                            <div className="relative h-16 w-full">
-                                <Image
-                                    src={TMDB.getImageUrl({
-                                        path:
-                                            productionCompany?.logo_path ?? "",
-                                        size: "w185",
-                                        type: "logo",
-                                    })}
-                                    alt={productionCompany?.name ?? ""}
-                                    layout="fill"
-                                    className="h-full w-full object-contain"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="flex flex-col gap-2 text-xs">
-                            {[
-                                {
-                                    title: "Director",
-                                    value: director,
-                                },
-                                {
-                                    title: "Production company",
-                                    value: productionCompany?.name,
-                                },
-                                {
-                                    title: "Budget",
-                                    value: formatCurrency(budget),
-                                },
-                                {
-                                    title: "Revenue",
-                                    value: formatCurrency(revenue),
-                                },
-                            ].map(({ title, value }) => (
-                                <div key={title} className="flex flex-col">
-                                    <span className=" font-bold">{title}</span>
-                                    <span className="">{value}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }
@@ -127,14 +49,14 @@ function MovieButtons() {
     return (
         <div className="flex flex-col justify-end gap-2">
             <Button variant="default">Check-in</Button>
-            <div className="flex justify-between gap-2">
-                <Button variant="secondary" className="aspect-square">
+            <div className="flex justify-end gap-2">
+                <Button size="icon" variant="outline" className="aspect-square">
                     <FontAwesomeIcon icon={faHeart} className="h-4 w-4" />
                 </Button>
-                <Button variant="secondary" className="aspect-square">
+                <Button size="icon" variant="outline" className="aspect-square">
                     <FontAwesomeIcon icon={faShare} className="h-4 w-4" />
                 </Button>
-                <Button variant="secondary" className="aspect-square">
+                <Button size="icon" variant="outline" className="aspect-square">
                     <FontAwesomeIcon icon={faEarth} className="h-4 w-4" />
                 </Button>
             </div>
@@ -143,7 +65,7 @@ function MovieButtons() {
 }
 
 type MovieCastProps = {
-    cast: Awaited<ReturnType<typeof TMDB.getMovieCredits>>["cast"];
+    cast: MovieCredits["cast"];
 };
 
 function MovieCast({ cast }: MovieCastProps) {
@@ -155,8 +77,8 @@ function MovieCast({ cast }: MovieCastProps) {
                     .slice(0, 8)
                     .map(({ character, id, name, profile_path }) => (
                         <div key={id} className="flex gap-2">
-                            {profile_path && (
-                                <div className="max-h-12 min-h-12 min-w-12 max-w-12 overflow-hidden rounded-full">
+                            <div className="max-h-12 min-h-12 min-w-12 max-w-12 overflow-hidden rounded-full">
+                                {profile_path ? (
                                     <Image
                                         src={TMDB.getImageUrl({
                                             path: profile_path,
@@ -168,8 +90,10 @@ function MovieCast({ cast }: MovieCastProps) {
                                         height={192}
                                         className="h-full w-full object-cover"
                                     />
-                                </div>
-                            )}
+                                ) : (
+                                    <PersonPlaceholder className="h-full w-full" />
+                                )}
+                            </div>
                             <div className="flex flex-col">
                                 <span className="line-clamp-2 text-ellipsis text-sm font-bold">
                                     {name}
@@ -199,19 +123,22 @@ export async function generateMetadata(
     return {
         title: movie.title,
         openGraph: {
-            images: [
-                TMDB.getImageUrl({
-                    type: "backdrop",
-                    size: "w780",
-                    path: movie.backdrop_path,
-                }),
-                TMDB.getImageUrl({
-                    type: "poster",
-                    size: "w780",
-                    path: movie.poster_path,
-                }),
-                ...previousImages,
-            ],
+            images:
+                movie.backdrop_path && movie.poster_path
+                    ? [
+                          TMDB.getImageUrl({
+                              type: "backdrop",
+                              size: "w780",
+                              path: movie.backdrop_path,
+                          }),
+                          TMDB.getImageUrl({
+                              type: "poster",
+                              size: "w780",
+                              path: movie.poster_path,
+                          }),
+                          ...previousImages,
+                      ]
+                    : previousImages,
         },
     };
 }
@@ -223,6 +150,11 @@ export default async function MoviePage({
 }) {
     const movie = await TMDB.getMovie({ movieId: params.movieId });
     const credits = await TMDB.getMovieCredits({ movieId: params.movieId });
+    const recommendations = await TMDB.getRecommendedMovies({
+        movieId: params.movieId,
+    });
+
+    // const middleContainerRef = useRef<HTMLDivElement>(null);
 
     return (
         <>
@@ -230,13 +162,15 @@ export default async function MoviePage({
             <MoviePoster
                 posterPath={movie.poster_path}
                 altText={`${movie.title} poster`}
+                imageSize="w780"
+                allowFlip
                 budget={movie.budget}
                 revenue={movie.revenue}
                 productionCompany={
                     movie.production_companies.sort((a, b) => a.id - b.id)[0]
                 }
-                director={
-                    credits.crew.find(({ job }) => job === "Director")?.name
+                directorName={
+                    credits.crew.find(({ job }) => job === "directorName")?.name
                 }
             />
             <MovieMetadata
@@ -248,9 +182,44 @@ export default async function MoviePage({
             <MovieButtons />
 
             <MovieCast cast={credits.cast} />
-            <div>
-                <h2 className="text-lg font-bold">Description</h2>
-                <p className="text-justify text-sm">{movie.overview}</p>
+            <div
+                className="flex max-w-full flex-col gap-8"
+                // ref={middleContainerRef}
+            >
+                <article>
+                    <h2 className="text-lg font-bold">Description</h2>
+                    <p className="text-justify text-sm">{movie.overview}</p>
+                </article>
+
+                <article>
+                    <h2 className="text-lg font-bold">Recommended movies</h2>
+                    <div className="relative">
+                        <div
+                            className="flex max-h-96 gap-2 overflow-x-scroll"
+                            style={
+                                {
+                                    // width: middleContainerRef.current?.clientWidth,
+                                }
+                            }
+                        >
+                            {recommendations.results
+                                .filter(
+                                    ({ media_type }) => media_type === "movie",
+                                )
+                                .map(({ id, title, poster_path }) => (
+                                    <div key={id} className="flex-grow">
+                                        <MoviePoster
+                                            posterPath={poster_path}
+                                            allowFlip={false}
+                                            imageSize="w342"
+                                            altText={`${title} poster`}
+                                        />
+                                    </div>
+                                ))}
+                        </div>
+                        <div className="pointer-events-none absolute left-0 top-0 h-full w-full bg-gradient-to-r from-secondary/0 via-secondary/0 to-secondary/100"></div>
+                    </div>
+                </article>
             </div>
         </>
     );

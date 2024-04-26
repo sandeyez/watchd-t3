@@ -24,6 +24,7 @@ const config = {
             colors: {
                 primary: "#101724",
                 secondary: "#1D253C",
+                tertiary: "#293A6C",
                 gradientBlue: "#1FD2FF",
                 gradientPink: "#AB62FF",
                 border: "hsl(var(--border))",

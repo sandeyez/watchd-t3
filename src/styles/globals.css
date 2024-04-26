@@ -75,34 +75,5 @@
     }
 }
 .gradient-text {
-    @apply to-gradientBlue inline-block h-fit w-fit bg-gradient-to-r from-gradientPink bg-clip-text text-transparent;
-}
-
-.movie-poster {
-    perspective: 1000px;
-}
-
-.movie-poster__inner {
-    position: relative;
-    transition: transform 0.3s;
-    transform-style: preserve-3d;
-}
-
-.movie-poster:hover .movie-poster__inner {
-    transform: rotateY(180deg);
-}
-
-.movie-poster__front,
-.movie-poster__back {
-    position: absolute;
-    backface-visibility: hidden;
-}
-
-.movie-poster__front {
-    background-color: #bbb;
-    color: black;
-}
-
-.movie-poster__back {
-    transform: rotateY(180deg);
+    @apply inline-block h-fit w-fit bg-gradient-to-r from-gradientPink to-gradientBlue bg-clip-text text-transparent;
 }
