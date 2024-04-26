@@ -39,24 +39,27 @@ export default function MoviePoster(props: MoviePosterProps) {
             })}
         >
             <div className="movie-poster__inner relative h-full w-full rounded-lg">
-                <Image
-                    src={TMDB.getImageUrl({
-                        path: posterPath,
-                        type: "poster",
-                        size: imageSize,
-                    })}
-                    alt={altText}
-                    width={228}
-                    height={342}
-                    className="movie-poster__front h-full w-full rounded-lg object-cover"
-                    priority
-                    placeholder="blur"
-                    blurDataURL={TMDB.getImageUrl({
-                        path: posterPath,
-                        type: "poster",
-                        size: "w92",
-                    })}
-                />
+                <div className="movie-poster__front h-full w-full rounded-lg object-cover">
+                    {posterPath && (
+                        <Image
+                            src={TMDB.getImageUrl({
+                                path: posterPath,
+                                type: "poster",
+                                size: imageSize,
+                            })}
+                            alt={altText}
+                            width={228}
+                            height={342}
+                            priority
+                            placeholder="blur"
+                            blurDataURL={TMDB.getImageUrl({
+                                path: posterPath,
+                                type: "poster",
+                                size: "w92",
+                            })}
+                        />
+                    )}
+                </div>
                 {allowFlip && (
                     <div className="movie-poster__back h-full w-full overflow-hidden rounded-lg">
                         <div className="flex h-full w-full flex-col justify-between gap-2 bg-primary p-4">
