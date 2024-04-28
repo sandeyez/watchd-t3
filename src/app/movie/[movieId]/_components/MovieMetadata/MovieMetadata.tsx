@@ -54,7 +54,7 @@ export default function MovieMetadata({
                 <span className="h-fit">{releaseDate.getFullYear()}</span>
             </motion.div>
 
-            <div className="flex items-center gap-2 pt-2">
+            <div className="flex flex-wrap items-center gap-2 pt-2">
                 {genres.slice(0, 3).map((genre) => (
                     <Tag key={genre.id}>{genre.name}</Tag>
                 ))}

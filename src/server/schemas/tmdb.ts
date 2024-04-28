@@ -9,6 +9,7 @@ export const movieSchema = z.object({
             name: z.string(),
         }),
     ),
+    homepage: z.string().nullable(),
     id: z.number(),
     overview: z.string(),
     poster_path: z.string().nullable(),

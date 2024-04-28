@@ -9,7 +9,9 @@
 }
 
 .movie-poster:hover .movie-poster__inner {
-    transform: rotateY(180deg);
+    @media (min-width: 768px) {
+        transform: rotateY(180deg);
+    }
 }
 
 .movie-poster__front,

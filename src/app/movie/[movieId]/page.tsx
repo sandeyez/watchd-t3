@@ -75,7 +75,7 @@ export default async function MoviePage({
                 releaseDate={new Date(movie.release_date)}
                 genres={movie.genres}
             />
-            <MovieButtons />
+            <MovieButtons homepage={movie.homepage} />
 
             <MovieCast cast={credits.cast} />
             <MovieOverview

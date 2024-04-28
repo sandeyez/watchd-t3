@@ -30,7 +30,7 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`flex flex-col bg-secondary font-sans text-white ${poppins.variable} overscroll-none`}
+                className={`flex h-screen w-screen bg-secondary font-sans text-white md:flex-col ${poppins.variable} overscroll-none`}
             >
                 <Navbar />
                 <div className="flex-grow">{children}</div>
