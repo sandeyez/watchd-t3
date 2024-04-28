@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import { useState } from "react";
 import Poster from "~/app/_components/Poster/Poster";
 import URLBuilder from "~/models/urlBuilder";
 
@@ -38,6 +39,8 @@ function ScrollableMovieList({
         scrollPercentage.set(percentage);
     };
 
+    const [hoveredMovieId, setHoveredMovieId] = useState<number | null>(null);
+
     return (
         <div className="relative min-h-48">
             <div
@@ -46,7 +49,24 @@ function ScrollableMovieList({
             >
                 <div className="flex h-full gap-2 py-2">
                     {results.map(({ id, title, poster_path }) => (
-                        <div key={id} className="aspect-[2/3] h-full flex-grow">
+                        <motion.div
+                            key={id}
+                            className="aspect-[2/3] h-full flex-grow"
+                            onMouseEnter={() => setHoveredMovieId(id)}
+                            onMouseLeave={() => setHoveredMovieId(null)}
+                            initial={{
+                                scale: 1,
+                                filter: "grayscale(0%)",
+                            }}
+                            animate={{
+                                scale: hoveredMovieId === id ? 1.05 : 1,
+                                filter:
+                                    hoveredMovieId === null ||
+                                    hoveredMovieId === id
+                                        ? "grayscale(0%)"
+                                        : "grayscale(100%)",
+                            }}
+                        >
                             <Poster
                                 posterPath={poster_path}
                                 imageSize="w342"
@@ -59,7 +79,7 @@ function ScrollableMovieList({
                                         : undefined
                                 }
                             />
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
             </div>
