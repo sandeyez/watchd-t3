@@ -13,7 +13,7 @@ type MovieButtonsProps = {
 
 export default function MovieButtons({ homepage }: MovieButtonsProps) {
     return (
-        <div className="col-span-2 flex flex-row-reverse justify-between gap-2 md:col-span-1 md:flex-col md:justify-end">
+        <div className="col-span-2 flex flex-row-reverse flex-wrap justify-between gap-2 md:col-span-1 md:flex-col md:justify-end">
             <Button variant="default" className="max-h-10 max-w-40 flex-grow">
                 Check-in
             </Button>

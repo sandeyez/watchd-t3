@@ -30,10 +30,10 @@ export default function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`flex h-screen w-screen bg-secondary font-sans text-white md:flex-col ${poppins.variable} overscroll-none`}
+                className={`h-device flex w-screen bg-secondary font-sans text-white md:flex-col ${poppins.variable} overscroll-none`}
             >
                 <Navbar />
-                <div className="max-h-screen flex-grow overflow-scroll">
+                <div className="max-h-device flex-grow overflow-scroll">
                     {children}
                 </div>
             </body>

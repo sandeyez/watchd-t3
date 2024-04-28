@@ -75,6 +75,9 @@ const config = {
             screens: {
                 xs: "540px",
             },
+            height: {
+                device: "100dvh",
+            },
         },
     },
     plugins: [require("tailwindcss-animate")],
