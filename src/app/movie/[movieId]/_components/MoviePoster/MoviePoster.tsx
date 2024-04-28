@@ -1,101 +1,67 @@
-import { type Movie } from "~/server/schemas/tmdb";
 import Image from "next/image";
+import Poster from "~/app/_components/Poster/Poster";
+import { ImageHelper, type TMDBImageSizes } from "~/models/imageHelper";
+import { type Movie } from "~/server/schemas/tmdb";
 import { formatCurrency } from "~/utils/format";
 import "./MoviePoster.css";
-import clsx from "clsx";
-import PosterPlaceholder from "~/app/_components/Placeholders/PosterPlaceholder";
-import { ImageHelper, type TMDBImageSizes } from "~/server/models/imageHelper";
+import { Skeleton } from "~/components/ui/skeleton";
 
 type MoviePosterProps = {
     posterPath: Movie["poster_path"];
     altText: string;
     imageSize: TMDBImageSizes["poster"];
-} & (
-    | {
-          allowFlip?: true;
-          budget: Movie["budget"];
-          revenue: Movie["revenue"];
-          directorName: string | undefined;
-          productionCompany: Movie["production_companies"][number] | undefined;
-      }
-    | {
-          allowFlip?: false;
-      }
-);
+    budget: Movie["budget"];
+    revenue: Movie["revenue"];
+    directorName: string | undefined;
+    productionCompany: Movie["production_companies"][number] | undefined;
+};
 
-export default function MoviePoster(props: MoviePosterProps) {
-    const { posterPath, altText, imageSize, allowFlip: allowFlipProp } = props;
-
-    const allowFlip =
-        allowFlipProp &&
-        (props.directorName !== undefined ||
-            props.productionCompany !== undefined ||
-            props.budget > 0 ||
-            props.revenue > 0);
-
+export default function MoviePoster({
+    altText,
+    budget,
+    directorName,
+    imageSize,
+    posterPath,
+    productionCompany,
+    revenue,
+}: MoviePosterProps) {
     return (
-        <div
-            className={clsx(`movie-poster aspect-[2/3]`, {
-                "movie-poster--flip": allowFlip,
-            })}
-        >
-            <div className="movie-poster__inner relative h-full w-full rounded-lg">
-                <div className="movie-poster__front h-full w-full overflow-hidden rounded-lg">
-                    {posterPath ? (
-                        <Image
-                            src={ImageHelper.getImageUrl({
-                                path: posterPath,
-                                type: "poster",
-                                size: imageSize,
-                            })}
-                            width={228}
-                            height={342}
-                            alt={altText}
-                            priority
-                            className="h-full w-full object-cover"
-                            placeholder="blur"
-                            blurDataURL={ImageHelper.getImageUrl({
-                                path: posterPath,
-                                type: "poster",
-                                size: "w92",
-                            })}
+        <div className="xs:col-span-1 xs:max-h-none xs:aspect-[2/3] col-span-2 flex aspect-video w-full justify-center">
+            <div className="movie-poster aspect-[2/3]">
+                <div className="movie-poster__inner relative h-full w-full rounded-lg">
+                    <div className="movie-poster__front">
+                        <Poster
+                            altText={altText}
+                            posterPath={posterPath}
+                            imageSize={imageSize}
                         />
-                    ) : (
-                        <PosterPlaceholder altText={altText} />
-                    )}
-                </div>
-                {allowFlip && (
+                    </div>
                     <div className="movie-poster__back h-full w-full overflow-hidden rounded-lg">
                         <div className="flex h-full w-full flex-col justify-between gap-2 bg-primary p-4">
                             <div className="flex flex-col gap-2 text-xs">
                                 {[
-                                    props.directorName
+                                    directorName
                                         ? {
                                               title: "Director",
-                                              value: props.directorName,
+                                              value: directorName,
                                           }
                                         : undefined,
-                                    props.productionCompany
+                                    productionCompany
                                         ? {
                                               title: "Production company",
-                                              value: props.productionCompany
-                                                  ?.name,
+                                              value: productionCompany?.name,
                                           }
                                         : undefined,
-                                    props.budget > 0
+                                    budget > 0
                                         ? {
                                               title: "Budget",
-                                              value: formatCurrency(
-                                                  props.budget,
-                                              ),
+                                              value: formatCurrency(budget),
                                           }
                                         : undefined,
-                                    props.revenue > 0
+                                    revenue > 0
                                         ? {
                                               title: "Revenue",
-                                              value: formatCurrency(
-                                                  props.revenue,
-                                              ),
+                                              value: formatCurrency(revenue),
                                           }
                                         : undefined,
                                 ].map(
@@ -115,21 +81,18 @@ export default function MoviePoster(props: MoviePosterProps) {
                                         ),
                                 )}
                             </div>
-                            {props.productionCompany?.logo_path && (
+                            {productionCompany?.logo_path && (
                                 <div className="mx-auto hidden h-32 w-full items-center justify-center rounded-md bg-white p-2 md:flex">
                                     <div className="relative h-16 w-full">
                                         <Image
                                             src={ImageHelper.getImageUrl({
                                                 path:
-                                                    props.productionCompany
-                                                        ?.logo_path ?? "",
+                                                    productionCompany?.logo_path ??
+                                                    "",
                                                 size: "w300",
                                                 type: "logo",
                                             })}
-                                            alt={
-                                                props.productionCompany?.name ??
-                                                ""
-                                            }
+                                            alt={productionCompany?.name ?? ""}
                                             layout="fill"
                                             className="h-full w-full object-contain"
                                         />
@@ -138,8 +101,16 @@ export default function MoviePoster(props: MoviePosterProps) {
                             )}
                         </div>
                     </div>
-                )}
+                </div>
             </div>
+        </div>
+    );
+}
+
+export function MoviePosterSkeleton(): JSX.Element {
+    return (
+        <div>
+            <Skeleton className="aspect-[2/3] w-full" />
         </div>
     );
 }

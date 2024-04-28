@@ -6,7 +6,7 @@ import {
     movieCreditsSchema,
     movieRecommendationsSchema,
     movieSchema,
-} from "../schemas/tmdb";
+} from "../server/schemas/tmdb";
 
 export default class TMDB {
     private static async makeRequest(path: string) {

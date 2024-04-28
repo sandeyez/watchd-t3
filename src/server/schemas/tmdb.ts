@@ -68,3 +68,5 @@ export const movieRecommendationsSchema = z.object({
     total_pages: z.number(),
     total_results: z.number(),
 });
+
+export type MovieRecommendations = z.infer<typeof movieRecommendationsSchema>;

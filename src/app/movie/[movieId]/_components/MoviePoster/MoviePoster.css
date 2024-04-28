@@ -8,7 +8,7 @@
     transform-style: preserve-3d;
 }
 
-.movie-poster--flip:hover .movie-poster__inner {
+.movie-poster:hover .movie-poster__inner {
     transform: rotateY(180deg);
 }
 
@@ -19,7 +19,6 @@
 }
 
 .movie-poster__front {
-    background-color: #bbb;
     color: black;
 }
 
