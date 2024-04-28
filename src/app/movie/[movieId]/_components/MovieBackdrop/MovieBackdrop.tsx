@@ -29,7 +29,7 @@ export default function MovieBackdrop({ backdropPath }: MovieBackdropProps) {
 
     return (
         <motion.div
-            className="pointer-events-none fixed left-0 top-0 -z-[1000] h-[50vh] w-full"
+            className="pointer-events-none fixed left-0 top-0 -z-[1000] h-[50vh] w-full translate-y-8"
             style={{ opacity, y, scale }}
         >
             <div className="absolute -z-20 h-full w-full overflow-hidden">
