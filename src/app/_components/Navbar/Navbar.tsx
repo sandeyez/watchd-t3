@@ -119,17 +119,22 @@ export default function Navbar({ isAuthenticated }: NavbarProps) {
                 }}
             />
             <motion.div
-                className="fixed bottom-0 z-50 flex h-[calc(100dvh-72px)] min-w-[50vw] flex-col gap-8 bg-secondary p-8"
+                className="fixed bottom-0 z-50 h-[calc(100dvh-72px)] w-[50vw] min-w-72 max-w-[100vw] bg-secondary"
                 initial={{
-                    left: "100%",
+                    right: "-100%",
                 }}
                 animate={{
-                    left: isMenuOpen ? "50%" : "100%",
+                    right: isMenuOpen ? "0%" : "-100%",
                 }}
             >
-                {navItems.map((item, index) => (
-                    <NavItem key={index} {...item} />
-                ))}
+                <div className="flex h-full w-full">
+                    <div className="h-full w-[2px] bg-gradient-to-b from-gradientPink to-gradientBlue" />
+                    <div className="flex flex-col gap-8 p-8">
+                        {navItems.map((item, index) => (
+                            <NavItem key={index} {...item} />
+                        ))}
+                    </div>
+                </div>
             </motion.div>
         </nav>
     );
