@@ -27,7 +27,7 @@ export default function MoviePoster({
 }: MoviePosterProps) {
     return (
         <div className="xs:col-span-1 xs:max-h-none xs:aspect-[2/3] col-span-2 flex aspect-video w-full justify-center">
-            <div className="movie-poster aspect-[2/3]">
+            <div className="movie-poster aspect-[2/3] h-full">
                 <div className="movie-poster__inner relative h-full w-full rounded-lg">
                     <div className="movie-poster__front">
                         <Poster
