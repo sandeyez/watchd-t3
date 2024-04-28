@@ -24,12 +24,23 @@ type NavItemProps = {
 
 function NavItem({ href, icon, title }: NavItemProps): JSX.Element {
     return (
-        <Link href={href} className="flex items-center gap-3 text-white">
-            <FontAwesomeIcon
-                icon={icon}
-                className="aspect-square h-5 md:h-4 "
-            />
-            <span className="text-sm font-semibold">{title}</span>
+        <Link href={href}>
+            <motion.div
+                className="flex items-center gap-3 text-white"
+                whileHover={{
+                    scale: 1.05,
+                    transition: {
+                        ease: "easeIn",
+                        duration: 0.1,
+                    },
+                }}
+            >
+                <FontAwesomeIcon
+                    icon={icon}
+                    className="aspect-square h-5 md:h-4 "
+                />
+                <span className="text-sm font-semibold">{title}</span>
+            </motion.div>
         </Link>
     );
 }
