@@ -58,7 +58,7 @@ async function Navbar() {
     const session = await getServerAuthSession();
 
     return (
-        <nav className="flex flex-col gap-4 bg-primary px-2 py-6 md:grid md:grid-flow-col md:px-4">
+        <nav className="flex h-screen flex-col gap-4 bg-primary px-2 py-6 md:grid md:h-fit md:grid-flow-col md:px-4">
             <Link
                 href="/"
                 className="flex h-fit items-center justify-center md:justify-start"
