@@ -2,8 +2,9 @@ import "~/styles/globals.css";
 
 import { Poppins } from "next/font/google";
 
-import Navbar from "./_components/Navbar/Navbar";
 import { type Metadata } from "next";
+import Navbar from "./_components/Navbar/Navbar";
+import { getServerAuthSession } from "~/server/auth";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -22,20 +23,20 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+    const session = await getServerAuthSession();
+
     return (
         <html lang="en">
             <body
-                className={`h-device flex w-screen bg-secondary font-sans text-white md:flex-col ${poppins.variable} overscroll-none`}
+                className={`h-device flex w-screen flex-col bg-secondary font-sans text-white ${poppins.variable} overscroll-none`}
             >
-                <Navbar />
-                <div className="max-h-device flex-grow overflow-scroll">
-                    {children}
-                </div>
+                <Navbar isAuthenticated={!!session} />
+                <div className="flex-grow">{children}</div>
             </body>
         </html>
     );

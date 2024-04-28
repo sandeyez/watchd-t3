@@ -19,9 +19,11 @@ export default function MovieMetadata({
     tagline,
 }: MovieMetadataProps) {
     return (
-        <div className="xs:col-span-1 xs:items-start col-span-2 flex flex-col items-center justify-end text-sm">
+        <div className="xs:col-span-1 xs:items-start xs:text-start col-span-2 flex flex-col items-center justify-end text-center text-sm">
             <div className="flex items-center">
-                <h1 className="gradient-text text-3xl font-bold">{title}</h1>
+                <h1 className="gradient-text text-2xl font-bold md:text-3xl">
+                    {title}
+                </h1>
             </div>
 
             {tagline && (
@@ -54,7 +56,7 @@ export default function MovieMetadata({
                 <span className="h-fit">{releaseDate.getFullYear()}</span>
             </motion.div>
 
-            <div className="flex flex-wrap items-center gap-2 pt-2">
+            <div className="xs:justify-start flex flex-wrap items-center justify-center gap-2 pt-2">
                 {genres.slice(0, 3).map((genre) => (
                     <Tag key={genre.id}>{genre.name}</Tag>
                 ))}
@@ -65,8 +67,8 @@ export default function MovieMetadata({
 
 export function MovieMetadataSkeleton() {
     return (
-        <div className="flex flex-col justify-end gap-2">
-            <Skeleton className="h-10 w-96" />
+        <div className="xs:col-span-1 xs:items-start xs:text-start col-span-2 flex flex-col items-center justify-end gap-2">
+            <Skeleton className="h-10 w-72" />
             <Skeleton className="h-3 w-52" />
             <Skeleton className="h-3 w-16" />
             <Skeleton className="h-5 w-64" />

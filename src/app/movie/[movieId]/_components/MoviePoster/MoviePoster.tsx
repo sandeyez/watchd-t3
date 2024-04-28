@@ -26,7 +26,7 @@ export default function MoviePoster({
     revenue,
 }: MoviePosterProps) {
     return (
-        <div className="xs:col-span-1 xs:max-h-none xs:aspect-[2/3] col-span-2 flex aspect-video w-full justify-center">
+        <div className="xs:col-span-1 xs:max-h-none xs:aspect-[2/3] col-span-2 flex aspect-[3/2] w-full justify-center">
             <div className="movie-poster aspect-[2/3] h-full">
                 <div className="movie-poster__inner relative h-full w-full rounded-lg">
                     <div className="movie-poster__front">
@@ -109,8 +109,8 @@ export default function MoviePoster({
 
 export function MoviePosterSkeleton(): JSX.Element {
     return (
-        <div>
-            <Skeleton className="aspect-[2/3] w-full" />
+        <div className="xs:col-span-1 xs:max-h-none xs:aspect-[2/3] col-span-2 flex aspect-[3/2] w-full justify-center">
+            <Skeleton className="aspect-[2/3]" />
         </div>
     );
 }

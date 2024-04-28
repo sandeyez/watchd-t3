@@ -51,9 +51,9 @@ export default function MovieCast({ cast }: MovieCastProps) {
 
 export function MovieCastSkeleton() {
     return (
-        <div className="flex w-full flex-col">
+        <div className="order-last col-span-2 flex w-full flex-col sm:block md:order-none md:col-span-1">
             <Skeleton className="mb-2 h-6 w-16" />
-            <div className="flex w-full flex-col gap-2">
+            <div className="xs:grid-cols-2 grid grid-cols-1 flex-col gap-2 sm:grid-cols-3 md:flex">
                 {new Array(8).fill(null).map((_, index) => (
                     <div key={index} className="flex w-full gap-2">
                         <Skeleton className="max-h-12 min-h-12 min-w-12 max-w-12 rounded-full" />
