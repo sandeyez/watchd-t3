@@ -34,8 +34,8 @@ export const watchlistItem = createTable(
     (table) => ({
         unique: unique("watchlist_item_unique").on(table.movieId, table.userId),
         primaryKey: primaryKey({ columns: [table.movieId, table.userId] }),
-        userIdIdx: index("userId_idx").on(table.userId),
-        movieIdIdx: index("movieId_idx").on(table.movieId),
+        userIdIdx: index("watchlist_item_userId_idx").on(table.userId),
+        movieIdIdx: index("watchlist_item_movieId_idx").on(table.movieId),
     }),
 );
 
@@ -54,8 +54,8 @@ export const review = createTable(
             .notNull(),
     },
     (table) => ({
-        userIdIdx: index("userId_idx").on(table.userId),
-        movieIdIdx: index("movieId_idx").on(table.movieId),
+        userIdIdx: index("review_userId_idx").on(table.userId),
+        movieIdIdx: index("review_movieId_idx").on(table.movieId),
     }),
 );
 
