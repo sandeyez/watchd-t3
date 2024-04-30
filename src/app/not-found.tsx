@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Button from "./_components/Button/Button";
+import Button from "./_components/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 

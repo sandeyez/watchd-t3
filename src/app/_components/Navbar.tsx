@@ -11,11 +11,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { toggleBodyScrolling } from "~/utils/react";
-import PersonPlaceholder from "../Placeholders/PersonPlaceholder";
+import PersonAvatar from "./PersonAvatar";
 
 type NavItemProps = {
     icon: IconDefinition;
@@ -70,16 +71,10 @@ const navItems: NavItemProps[] = [
     },
 ];
 
-type NavbarProps = {
-    isAuthenticated: boolean;
-    profilePictureUrl: string | null;
-};
-
-export default function Navbar({
-    isAuthenticated,
-    profilePictureUrl,
-}: NavbarProps) {
+export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const { data, status } = useSession();
 
     const toggleMenu = () => {
         toggleBodyScrolling(isMenuOpen);
@@ -106,19 +101,14 @@ export default function Navbar({
                 ))}
             </div>
             <div className="hidden items-center justify-end md:flex">
-                {isAuthenticated ? (
+                {status === "authenticated" ? (
                     <Link href="/profile" className="text-white">
-                        <div className="relative aspect-square h-8 overflow-hidden rounded-full border-2 border-white">
-                            {profilePictureUrl ? (
-                                <Image
-                                    src={profilePictureUrl}
-                                    layout="fill"
-                                    alt="Profile picture"
-                                />
-                            ) : (
-                                <PersonPlaceholder />
-                            )}
-                        </div>
+                        <PersonAvatar
+                            src={data.user.image}
+                            altText="Profile picture"
+                            variant="small"
+                            withBorder
+                        />
                     </Link>
                 ) : (
                     <Link href="/login" className="text-white">
@@ -136,7 +126,7 @@ export default function Navbar({
                 {isMenuOpen && (
                     <>
                         <motion.div
-                            className="fixed bottom-0 left-0 z-40 h-[calc(100dvh-72px)] w-screen backdrop-blur-md"
+                            className="fixed bottom-0 left-0 z-40 h-[calc(100dvh-72px)] w-screen"
                             initial={{
                                 backdropFilter: "blur(0px)",
                             }}

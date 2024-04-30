@@ -1,19 +1,19 @@
 import { faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-type PersonPlaceholderProps = {
+type PlaceholderPersonProps = {
     className?: string;
 };
 
-function PersonPlaceholder({ className }: PersonPlaceholderProps): JSX.Element {
+export default function PlaceholderPerson({
+    className,
+}: PlaceholderPersonProps): JSX.Element {
     return (
         <div className={`${className} aspect-square rounded-full bg-secondary`}>
             <FontAwesomeIcon
                 icon={faCircleUser}
-                className="text-tertiary h-full w-full"
+                className="h-full w-full text-tertiary"
             />
         </div>
     );
 }
-
-export default PersonPlaceholder;

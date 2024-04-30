@@ -7,6 +7,8 @@ import MovieCast from "./_components/MovieCast/MovieCast";
 import MovieMetadata from "./_components/MovieMetadata/MovieMetadata";
 import MovieOverview from "./_components/MovieOverview/MovieOverview";
 import MoviePoster from "./_components/MoviePoster/MoviePoster";
+import MovieProviders from "./_providers";
+import { isMovieInWatchlist } from "~/server/db/queries";
 
 export async function generateMetadata(
     { params }: { params: { movieId: string } },
@@ -53,35 +55,20 @@ export default async function MoviePage({
         movieId: params.movieId,
     });
 
+    const isAddedToWatchlist = await isMovieInWatchlist({ movieId: movie.id });
+
     return (
-        <>
-            <MovieBackdrop backdropPath={movie.backdrop_path} />
-            <MoviePoster
-                posterPath={movie.poster_path}
-                altText={`${movie.title} poster`}
-                imageSize="w780"
-                budget={movie.budget}
-                revenue={movie.revenue}
-                productionCompany={
-                    movie.production_companies.sort((a, b) => a.id - b.id)[0]
-                }
-                directorName={
-                    credits.crew.find(({ job }) => job === "directorName")?.name
-                }
-            />
-            <MovieMetadata
-                title={movie.title}
-                tagline={movie.tagline}
-                releaseDate={new Date(movie.release_date)}
-                genres={movie.genres}
-            />
-            <MovieButtons homepage={movie.homepage} movieId={movie.id} />
+        <MovieProviders movie={movie} credits={credits}>
+            <MovieBackdrop />
+            <MoviePoster />
+            <MovieMetadata />
+            <MovieButtons isAddedToWatchlist={isAddedToWatchlist} />
 
             <MovieCast cast={credits.cast} />
             <MovieOverview
                 overview={movie.overview}
                 recommendations={recommendations.results}
             />
-        </>
+        </MovieProviders>
     );
 }

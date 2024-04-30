@@ -1,10 +1,12 @@
 import Image from "next/image";
 
-type PosterPlaceholderProps = {
+type PlaceholderPosterProps = {
     altText: string;
 };
 
-function PosterPlaceholder({ altText }: PosterPlaceholderProps): JSX.Element {
+export default function PlaceholderPoster({
+    altText,
+}: PlaceholderPosterProps): JSX.Element {
     return (
         <div className="relative h-full w-full">
             <Image
@@ -16,5 +18,3 @@ function PosterPlaceholder({ altText }: PosterPlaceholderProps): JSX.Element {
         </div>
     );
 }
-
-export default PosterPlaceholder;

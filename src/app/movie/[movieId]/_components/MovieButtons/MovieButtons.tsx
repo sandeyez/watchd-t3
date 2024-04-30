@@ -1,35 +1,28 @@
-// type MovieButtonsProps = {}
+"use client";
 
 import { faEarth, faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
+import Button from "~/app/_components/Button";
 import { Skeleton } from "~/components/ui/skeleton";
-import { type Movie } from "~/server/schemas/tmdb";
+import { useMovie } from "../../_providers";
+import CheckInButton from "./_components/CheckInButton";
 import WatchlistButton from "./_components/WatchlistButton";
-import { isMovieInWatchlist } from "~/server/db/queries";
-import Button from "~/app/_components/Button/Button";
 
 type MovieButtonsProps = {
-    homepage: Movie["homepage"];
-    movieId: Movie["id"];
+    isAddedToWatchlist: boolean;
 };
 
-export default async function MovieButtons({
-    homepage,
-    movieId,
+export default function MovieButtons({
+    isAddedToWatchlist,
 }: MovieButtonsProps) {
-    const isAddedToWatchlist = await isMovieInWatchlist({ movieId });
+    const { homepage } = useMovie();
 
     return (
         <div className="col-span-2 flex flex-row justify-between gap-2 md:col-span-1 md:flex-col md:justify-end">
-            <Button variant="default" className="max-h-10 max-w-40 flex-grow">
-                Check-in
-            </Button>
+            <CheckInButton />
             <div className="flex justify-end gap-2">
-                <WatchlistButton
-                    movieId={movieId}
-                    isAddedToWatchlist={isAddedToWatchlist}
-                />
+                <WatchlistButton isAddedToWatchlist={isAddedToWatchlist} />
                 <Button size="icon" variant="outline" tooltip="Share movie">
                     <FontAwesomeIcon icon={faShare} className="h-5 w-5" />
                 </Button>

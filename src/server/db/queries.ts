@@ -2,7 +2,7 @@
 
 import { getServerSession } from "next-auth/next";
 import { db } from ".";
-import { watchlistItem } from "./schema";
+import { review, watchlistItem } from "./schema";
 import { authOptions } from "../auth";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
@@ -117,4 +117,35 @@ export async function isMovieInWatchlist({ movieId }: { movieId: number }) {
         );
 
     return existingWatchlistItem.length > 0;
+}
+
+type AddMovieReviewProps = {
+    movieId: number;
+    rating: number;
+    review: string;
+};
+
+export async function addMovieReview({
+    movieId,
+    rating,
+    review: reviewText,
+}: AddMovieReviewProps) {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+        throw new Error("User is not authenticated");
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
+    try {
+        await db.insert(review).values({
+            movieId,
+            userId: session.user.id,
+            rating,
+            review: reviewText,
+        });
+    } catch (error) {
+        console.error(error);
+    }
 }

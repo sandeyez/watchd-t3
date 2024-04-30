@@ -9,13 +9,11 @@ import {
 } from "framer-motion";
 import Image from "next/image";
 import { ImageHelper } from "~/models/imageHelper";
-import { type Movie } from "~/server/schemas/tmdb";
+import { useMovie } from "../../_providers";
 
-type MovieBackdropProps = {
-    backdropPath: Movie["backdrop_path"];
-};
+export default function MovieBackdrop() {
+    const { backdrop_path: backdropPath } = useMovie();
 
-export default function MovieBackdrop({ backdropPath }: MovieBackdropProps) {
     const { scrollY } = useScroll();
     const opacity = useTransform(scrollY, [0, 400], [1, 0], {
         ease: easeInOut,

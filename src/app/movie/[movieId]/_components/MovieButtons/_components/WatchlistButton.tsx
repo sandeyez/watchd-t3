@@ -4,19 +4,20 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion, useAnimationControls } from "framer-motion";
 import { useOptimistic } from "react";
-import Button from "~/app/_components/Button/Button";
+import Button from "~/app/_components/Button";
 import { cn } from "~/lib/utils";
 import { addToWatchlist, removeFromWatchlist } from "~/server/db/queries";
+import { useMovie } from "../../../_providers";
 
 type WatchlistButtonProps = {
-    movieId: number;
     isAddedToWatchlist: boolean;
 };
 
 function WatchlistButton({
     isAddedToWatchlist,
-    movieId,
 }: WatchlistButtonProps): JSX.Element {
+    const { id: movieId } = useMovie();
+
     const [optimisticIsAddedToWatchlist, setOptimisticIsAddedToWatchlist] =
         useOptimistic(isAddedToWatchlist);
 

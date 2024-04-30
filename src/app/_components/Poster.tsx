@@ -1,10 +1,10 @@
 "use client";
 
 import { ImageHelper, type TMDBImageSizes } from "~/models/imageHelper";
-import RenderInWrapperIf from "../RenderInWrapperIf/RenderInWrapperIf";
+import RenderInWrapperIf from "./RenderInWrapperIf";
 import Link from "next/link";
 import Image from "next/image";
-import PosterPlaceholder from "../Placeholders/PosterPlaceholder";
+import PlaceholderPoster from "./PlaceholderPoster";
 import { type Movie } from "~/server/schemas/tmdb";
 
 type PosterProps = {
@@ -37,7 +37,7 @@ function Poster({
                         height={342}
                         alt={altText}
                         priority
-                        className="h-full w-full object-cover"
+                        className="h-full w-full object-contain"
                         placeholder="blur"
                         blurDataURL={ImageHelper.getImageUrl({
                             path: posterPath,
@@ -46,7 +46,7 @@ function Poster({
                         })}
                     />
                 ) : (
-                    <PosterPlaceholder altText={altText} />
+                    <PlaceholderPoster altText={altText} />
                 )}
             </div>
         </RenderInWrapperIf>

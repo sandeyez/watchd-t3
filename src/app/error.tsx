@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Button from "./_components/Button/Button";
+import Button from "./_components/Button";
 
 export default function ErrorPage({
     reset,

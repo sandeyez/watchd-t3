@@ -1,39 +1,39 @@
+"use client";
+
 import Image from "next/image";
-import Poster from "~/app/_components/Poster/Poster";
-import { ImageHelper, type TMDBImageSizes } from "~/models/imageHelper";
-import { type Movie } from "~/server/schemas/tmdb";
-import { formatCurrency } from "~/utils/format";
-import "./MoviePoster.css";
+import Poster from "~/app/_components/Poster";
 import { Skeleton } from "~/components/ui/skeleton";
+import { ImageHelper } from "~/models/imageHelper";
+import { formatCurrency } from "~/utils/format";
+import { useMovie, useMovieCredits } from "../../_providers";
+import "./MoviePoster.css";
 
-type MoviePosterProps = {
-    posterPath: Movie["poster_path"];
-    altText: string;
-    imageSize: TMDBImageSizes["poster"];
-    budget: Movie["budget"];
-    revenue: Movie["revenue"];
-    directorName: string | undefined;
-    productionCompany: Movie["production_companies"][number] | undefined;
-};
+export default function MoviePoster() {
+    const {
+        title,
+        budget,
+        revenue,
+        production_companies: productionCompanies,
+        poster_path: posterPath,
+    } = useMovie();
 
-export default function MoviePoster({
-    altText,
-    budget,
-    directorName,
-    imageSize,
-    posterPath,
-    productionCompany,
-    revenue,
-}: MoviePosterProps) {
+    const productionCompany = productionCompanies.sort(
+        (a, b) => a.id - b.id,
+    )[0];
+
+    const { crew } = useMovieCredits();
+
+    const directorName = crew.find(({ job }) => job === "directorName")?.name;
+
     return (
-        <div className="xs:col-span-1 xs:max-h-none xs:aspect-[2/3] col-span-2 flex aspect-[3/2] w-full justify-center">
+        <div className="col-span-2 flex aspect-[3/2] w-full justify-center xs:col-span-1 xs:aspect-[2/3] xs:max-h-none">
             <div className="movie-poster aspect-[2/3] h-full">
                 <div className="movie-poster__inner relative h-full w-full rounded-lg">
                     <div className="movie-poster__front">
                         <Poster
-                            altText={altText}
+                            altText={`${title} poster`}
                             posterPath={posterPath}
-                            imageSize={imageSize}
+                            imageSize="w780"
                         />
                     </div>
                     <div className="movie-poster__back h-full w-full overflow-hidden rounded-lg">
@@ -109,7 +109,7 @@ export default function MoviePoster({
 
 export function MoviePosterSkeleton(): JSX.Element {
     return (
-        <div className="xs:col-span-1 xs:max-h-none xs:aspect-[2/3] col-span-2 flex aspect-[3/2] w-full justify-center">
+        <div className="col-span-2 flex aspect-[3/2] w-full justify-center xs:col-span-1 xs:aspect-[2/3] xs:max-h-none">
             <Skeleton className="aspect-[2/3]" />
         </div>
     );

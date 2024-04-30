@@ -2,7 +2,7 @@
 
 import { motion, useMotionValue, useTransform } from "framer-motion";
 import { useState } from "react";
-import Poster from "~/app/_components/Poster/Poster";
+import Poster from "~/app/_components/Poster";
 import URLBuilder from "~/models/urlBuilder";
 
 type ScrollableMovieListProps = {
