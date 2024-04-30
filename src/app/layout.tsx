@@ -3,8 +3,8 @@ import "~/styles/globals.css";
 import { Poppins } from "next/font/google";
 
 import { type Metadata } from "next";
-import Navbar from "./_components/Navbar/Navbar";
 import { getServerAuthSession } from "~/server/auth";
+import Navbar from "./_components/Navbar/Navbar";
 
 const poppins = Poppins({
     subsets: ["latin"],
@@ -33,9 +33,12 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body
-                className={`h-device flex w-screen flex-col bg-secondary font-sans text-white ${poppins.variable} overscroll-none`}
+                className={`flex h-device w-screen flex-col bg-secondary font-sans text-white ${poppins.variable} overscroll-none`}
             >
-                <Navbar isAuthenticated={!!session} />
+                <Navbar
+                    isAuthenticated={!!session}
+                    profilePictureUrl={session?.user.image ?? null}
+                />
                 <div className="flex-grow">{children}</div>
             </body>
         </html>

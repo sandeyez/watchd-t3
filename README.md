@@ -7,7 +7,7 @@ Watchd is a social platform that revolves completely around movies and series. U
 -   [x] Setup the project using create-t3-app
 -   [x] Create navigation bar
 -   [x] Create basic movie page
--   [ ] Set up database
+-   [x] Set up database
 -   [ ] Better error handling
 -   [ ] Deploy to Vercel
 -   [ ] Add user authentication

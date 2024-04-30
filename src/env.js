@@ -25,6 +25,8 @@ export const env = createEnv({
         TMDB_API_KEY: z.string(),
         TMDB_API_ACCESS_TOKEN: z.string(),
         TMDB_API_BASE_URL: z.string().url(),
+        GOOGLE_CLIENT_ID: z.string(),
+        GOOGLE_CLIENT_SECRET: z.string(),
     },
 
     /**
@@ -48,6 +50,8 @@ export const env = createEnv({
         TMDB_API_KEY: process.env.TMDB_API_KEY,
         TMDB_API_ACCESS_TOKEN: process.env.TMDB_API_ACCESS_TOKEN,
         TMDB_API_BASE_URL: process.env.TMDB_API_BASE_URL,
+        GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
+        GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
         NEXT_PUBLIC_TMDB_IMAGE_BASE_URL:
             process.env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL,
     },

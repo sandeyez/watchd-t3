@@ -59,7 +59,7 @@ function ScrollableMovieList({
                                 filter: "grayscale(0%)",
                             }}
                             animate={{
-                                scale: hoveredMovieId === id ? 1.05 : 1,
+                                scale: hoveredMovieId === id ? 1.08 : 1,
                                 filter:
                                     hoveredMovieId === null ||
                                     hoveredMovieId === id

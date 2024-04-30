@@ -9,12 +9,17 @@ const config = {
     images: {
         remotePatterns: [
             {
-                hostname: 'image.tmdb.org',
-                protocol: 'https',
-                pathname: '/t/p/**',
-            }
-        ]
-    }
+                hostname: "image.tmdb.org",
+                protocol: "https",
+                pathname: "/t/p/**",
+            },
+            {
+                hostname: "lh3.googleusercontent.com",
+                protocol: "https",
+                pathname: "/a/**",
+            },
+        ],
+    },
 };
 
 export default config;

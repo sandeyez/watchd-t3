@@ -15,6 +15,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { toggleBodyScrolling } from "~/utils/react";
+import PersonPlaceholder from "../Placeholders/PersonPlaceholder";
 
 type NavItemProps = {
     icon: IconDefinition;
@@ -28,7 +29,8 @@ function NavItem({ href, icon, title }: NavItemProps): JSX.Element {
             <motion.div
                 className="flex items-center gap-3 text-white"
                 whileHover={{
-                    scale: 1.05,
+                    scale: 1.1,
+                    translateY: -2,
                     transition: {
                         ease: "easeIn",
                         duration: 0.1,
@@ -70,9 +72,13 @@ const navItems: NavItemProps[] = [
 
 type NavbarProps = {
     isAuthenticated: boolean;
+    profilePictureUrl: string | null;
 };
 
-export default function Navbar({ isAuthenticated }: NavbarProps) {
+export default function Navbar({
+    isAuthenticated,
+    profilePictureUrl,
+}: NavbarProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const toggleMenu = () => {
@@ -102,7 +108,17 @@ export default function Navbar({ isAuthenticated }: NavbarProps) {
             <div className="hidden items-center justify-end md:flex">
                 {isAuthenticated ? (
                     <Link href="/profile" className="text-white">
-                        Profile
+                        <div className="relative aspect-square h-8 overflow-hidden rounded-full border-2 border-white">
+                            {profilePictureUrl ? (
+                                <Image
+                                    src={profilePictureUrl}
+                                    layout="fill"
+                                    alt="Profile picture"
+                                />
+                            ) : (
+                                <PersonPlaceholder />
+                            )}
+                        </div>
                     </Link>
                 ) : (
                     <Link href="/login" className="text-white">
