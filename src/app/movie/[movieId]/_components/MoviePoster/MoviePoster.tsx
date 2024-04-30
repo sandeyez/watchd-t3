@@ -29,7 +29,7 @@ export default function MoviePoster() {
         <div className="col-span-2 flex aspect-[3/2] w-full justify-center xs:col-span-1 xs:aspect-[2/3] xs:max-h-none">
             <div className="movie-poster aspect-[2/3] h-full">
                 <div className="movie-poster__inner relative h-full w-full rounded-lg">
-                    <div className="movie-poster__front">
+                    <div className="movie-poster__front h-full w-full">
                         <Poster
                             altText={`${title} poster`}
                             posterPath={posterPath}

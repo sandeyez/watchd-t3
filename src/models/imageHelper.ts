@@ -35,6 +35,10 @@ type GetImageUrlProps = {
 
 export class ImageHelper {
     static getImageUrl({ path, size }: GetImageUrlProps) {
-        return `${env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}/${size}${path.startsWith("/") ? path : `/${path}`}`;
+        if (typeof path !== "string" || !path) {
+            console.log("No path provided for image", path);
+        }
+        // eslint-disable-next-line @typescript-eslint/prefer-optional-chain
+        return `${env.NEXT_PUBLIC_TMDB_IMAGE_BASE_URL}/${size}${path}`;
     }
 }

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const movieSchema = z.object({
-    backdrop_path: z.string(),
+    backdrop_path: z.string().nullable(),
     budget: z.number(),
     genres: z.array(
         z.object({
@@ -72,3 +72,21 @@ export const movieRecommendationsSchema = z.object({
 });
 
 export type MovieRecommendations = z.infer<typeof movieRecommendationsSchema>;
+
+export const movieSearchResultsSchema = z.object({
+    page: z.number(),
+    results: z.array(
+        z.object({
+            backdrop_path: z.string().nullable(),
+            id: z.number(),
+            overview: z.string(),
+            poster_path: z.string().nullable(),
+            release_date: z.string(),
+            title: z.string(),
+        }),
+    ),
+    total_pages: z.number(),
+    total_results: z.number(),
+});
+
+export type MovieSearchResults = z.infer<typeof movieSearchResultsSchema>;

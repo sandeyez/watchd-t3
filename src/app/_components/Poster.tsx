@@ -6,12 +6,15 @@ import Link from "next/link";
 import Image from "next/image";
 import PlaceholderPoster from "./PlaceholderPoster";
 import { type Movie } from "~/server/schemas/tmdb";
+import { cn } from "~/lib/utils";
+import { useState } from "react";
 
 type PosterProps = {
     posterPath: Movie["poster_path"];
     imageSize: TMDBImageSizes["poster"];
     altText: string;
     href?: string;
+    objectCover?: boolean;
 };
 
 function Poster({
@@ -19,6 +22,7 @@ function Poster({
     imageSize,
     posterPath,
     href,
+    objectCover,
 }: PosterProps): JSX.Element {
     return (
         <RenderInWrapperIf
@@ -26,7 +30,7 @@ function Poster({
             wrapper={(children) => <Link href={href!}>{children}</Link>}
         >
             <div className="h-full w-full overflow-hidden rounded-lg">
-                {posterPath ? (
+                {posterPath !== null ? (
                     <Image
                         src={ImageHelper.getImageUrl({
                             path: posterPath,
@@ -37,7 +41,9 @@ function Poster({
                         height={342}
                         alt={altText}
                         priority
-                        className="h-full w-full object-contain"
+                        className={cn("h-full w-full object-contain", {
+                            "object-cover": objectCover,
+                        })}
                         placeholder="blur"
                         blurDataURL={ImageHelper.getImageUrl({
                             path: posterPath,

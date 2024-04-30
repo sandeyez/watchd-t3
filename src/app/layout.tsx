@@ -35,7 +35,9 @@ export default async function RootLayout({
             >
                 <RootProviders>
                     <Navbar />
-                    <div className="flex-grow">{children}</div>
+                    <div className="flex-grow px-4 py-8 md:px-8">
+                        {children}
+                    </div>
                 </RootProviders>
             </body>
         </html>
