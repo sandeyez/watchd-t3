@@ -21,6 +21,7 @@ const buttonVariants = cva(
                     "bg-gradient-to-r to-gradientBlue font-bold from-gradientPink text-primary-foreground hover:bg-primary/90",
                 outline:
                     "bg-transparent text-white hover:bg-accent hover:text-accent-foreground",
+                secondary: "bg-white text-black font-bold hover:bg-slate-100",
             },
             size: {
                 default: "h-10 px-4 py-2",

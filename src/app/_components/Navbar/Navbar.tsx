@@ -87,7 +87,7 @@ export default function Navbar({
     };
 
     return (
-        <nav className="flex h-[72px] items-center justify-between gap-4 bg-primary px-4 py-6 md:grid md:grid-flow-col">
+        <nav className="flex h-[72px] items-center justify-between gap-4 bg-primary px-6 py-4 md:grid md:grid-flow-col">
             <Link
                 href="/"
                 className="flex h-fit items-center justify-center md:justify-start"
