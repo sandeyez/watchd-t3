@@ -10,7 +10,7 @@ import {
     type IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -132,37 +132,46 @@ export default function Navbar({
                 className="h-6 w-6 cursor-pointer text-white md:hidden"
                 onClick={toggleMenu}
             />
-            <motion.div
-                className="fixed bottom-0 left-0 z-40 h-[calc(100dvh-72px)] w-screen backdrop-blur-md"
-                initial={{
-                    backdropFilter: "none",
-                }}
-                animate={{
-                    backdropFilter: isMenuOpen ? "blur(12px)" : "none",
-                }}
-                onClick={isMenuOpen ? toggleMenu : undefined}
-                style={{
-                    pointerEvents: isMenuOpen ? "auto" : "none",
-                }}
-            />
-            <motion.div
-                className="fixed bottom-0 z-50 h-[calc(100dvh-72px)] w-[50vw] min-w-72 max-w-[100vw] bg-secondary"
-                initial={{
-                    right: "-100%",
-                }}
-                animate={{
-                    right: isMenuOpen ? "0%" : "-100%",
-                }}
-            >
-                <div className="flex h-full w-full">
-                    <div className="h-full w-[2px] bg-gradient-to-b from-gradientPink to-gradientBlue" />
-                    <div className="flex flex-col gap-8 p-8">
-                        {navItems.map((item, index) => (
-                            <NavItem key={index} {...item} />
-                        ))}
-                    </div>
-                </div>
-            </motion.div>
+            <AnimatePresence initial={false} mode="wait">
+                {isMenuOpen && (
+                    <>
+                        <motion.div
+                            className="fixed bottom-0 left-0 z-40 h-[calc(100dvh-72px)] w-screen backdrop-blur-md"
+                            initial={{
+                                backdropFilter: "blur(0px)",
+                            }}
+                            animate={{
+                                backdropFilter: "blur(12px)",
+                            }}
+                            exit={{
+                                backdropFilter: "blur(0px)",
+                            }}
+                            onClick={toggleMenu}
+                        />
+                        <motion.div
+                            className="fixed bottom-0 z-50 h-[calc(100dvh-72px)] w-[50vw] min-w-72 max-w-[100vw] bg-secondary"
+                            initial={{
+                                right: "-100%",
+                            }}
+                            animate={{
+                                right: isMenuOpen ? "0%" : "-100%",
+                            }}
+                            exit={{
+                                right: "-100%",
+                            }}
+                        >
+                            <div className="flex h-full w-full">
+                                <div className="h-full w-[2px] bg-gradient-to-b from-gradientPink to-gradientBlue" />
+                                <div className="flex flex-col gap-8 p-8">
+                                    {navItems.map((item, index) => (
+                                        <NavItem key={index} {...item} />
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </>
+                )}
+            </AnimatePresence>
         </nav>
     );
 }
