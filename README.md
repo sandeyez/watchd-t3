@@ -12,11 +12,11 @@ Watchd is a social platform that revolves completely around movies and series. U
 -   [x] Deploy to Vercel
 -   [x] Add user authentication
 -   [x] Add watchlist feature
--   [ ] Add check-in feature
+-   [x] Add check-in feature
+-   [ ] Build search function
 -   [ ] Add rating features for movies
 -   [ ] Add user profile page
 -   [ ] Add user following feature
 -   [ ] Build homepage with feed
--   [ ] Build search function
 -   [ ] Build discovery page
 -   [ ] Build watchlist page

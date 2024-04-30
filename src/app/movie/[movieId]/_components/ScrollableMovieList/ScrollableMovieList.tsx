@@ -43,15 +43,15 @@ function ScrollableMovieList({
 
     return (
         <div className="relative min-h-48">
-            <div
-                className="absolute h-full w-full overflow-x-scroll"
-                onScroll={handleScroll}
-            >
-                <div className="flex h-full gap-2 py-2">
+            <div className=" flex h-full w-full ">
+                <div
+                    className="absolute flex h-full w-full snap-x gap-2 overflow-x-scroll py-2"
+                    onScroll={handleScroll}
+                >
                     {results.map(({ id, title, poster_path }) => (
                         <motion.div
                             key={id}
-                            className="aspect-[2/3] h-full flex-grow"
+                            className="aspect-[2/3] h-full flex-grow snap-start"
                             onMouseEnter={() => setHoveredMovieId(id)}
                             onMouseLeave={() => setHoveredMovieId(null)}
                             initial={{

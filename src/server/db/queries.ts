@@ -136,8 +136,6 @@ export async function addMovieReview({
         throw new Error("User is not authenticated");
     }
 
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
     try {
         await db.insert(review).values({
             movieId,

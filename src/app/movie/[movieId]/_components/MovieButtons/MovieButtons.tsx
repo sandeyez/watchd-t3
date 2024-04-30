@@ -49,7 +49,7 @@ export function MovieButtonsSkeleton() {
     return (
         <div className="col-span-2 flex flex-row justify-between gap-2 md:col-span-1 md:flex-col md:justify-end">
             <Skeleton className="max-h-10 max-w-40 flex-grow" />
-            <div className="flex gap-2">
+            <div className="flex justify-end gap-2">
                 <Skeleton className="h-10 w-10" />
                 <Skeleton className="h-10 w-10" />
                 <Skeleton className="h-10 w-10" />

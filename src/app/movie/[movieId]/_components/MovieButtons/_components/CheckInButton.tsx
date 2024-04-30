@@ -1,16 +1,16 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { useOptimistic, useState } from "react";
+import { useState } from "react";
 import Button from "~/app/_components/Button";
 import EmojiSelect from "~/app/_components/EmojiSelect";
 import Modal from "~/app/_components/Modal";
 import PersonAvatar from "~/app/_components/PersonAvatar";
 import Poster from "~/app/_components/Poster";
 import { Textarea } from "~/app/_components/Textarea";
+import { addMovieReview } from "~/server/db/queries";
 import { ratings, ratingsMap } from "~/utils/ratings";
 import { useMovie } from "../../../_providers";
-import { addMovieReview } from "~/server/db/queries";
 
 function CheckInButton() {
     const {
@@ -78,7 +78,7 @@ function CheckInButton() {
                                 <span>watched</span>
                             </div>
                             <div className="flex flex-col">
-                                <span className="gradient-text text-lg font-bold">
+                                <span className="gradient-text text-2xl font-bold">
                                     {title}
                                 </span>
                                 <div className="flex items-center gap-2 text-xs">

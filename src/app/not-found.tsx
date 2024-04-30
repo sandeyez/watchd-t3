@@ -6,7 +6,7 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 export default function NotFoundPage() {
     return (
         <div className="relative flex h-full w-full flex-col items-center gap-8 p-8 pt-[30vh]">
-            <div className="animate-fadeIn fixed left-0 top-[72px] -z-10 h-full w-full bg-gradient-to-b from-secondary to-tertiary"></div>
+            <div className="fixed left-0 top-[72px] -z-10 h-full w-full bg-secondary"></div>
             <div className="flex max-w-lg flex-col items-center gap-2 text-center">
                 <span className="gradient-text text-4xl font-bold">
                     Oops...

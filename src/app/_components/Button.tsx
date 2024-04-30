@@ -84,7 +84,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                     className={cn(buttonVariants({ variant, size, className }))}
                     ref={ref}
                     whileHover={{
-                        scale: wide ? 1.05 : 1.1,
+                        scale: 1.05,
                         translateY: wide ? 0 : -2,
                         transition: {
                             ease: "easeIn",
