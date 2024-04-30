@@ -27,6 +27,12 @@ function WatchlistButton({
         const pathToRevalidate = `/movie/${movieId}`;
 
         if (optimisticIsAddedToWatchlist) {
+            controls.stop();
+            void controls.start({
+                scale: 1,
+                rotate: 0,
+                transition: { duration: 0.5, ease: "easeInOut" },
+            });
             await removeFromWatchlist({ movieId, pathToRevalidate });
         } else {
             void controls.start({
@@ -36,6 +42,10 @@ function WatchlistButton({
                     duration: 1,
                     ease: "easeInOut",
                     times: [0, 0.3, 0.7, 1],
+                },
+                transitionEnd: {
+                    scale: 1,
+                    rotate: 0,
                 },
             });
             await addToWatchlist({ movieId, pathToRevalidate });
