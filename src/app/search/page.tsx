@@ -4,36 +4,12 @@
 import { AnimatePresence, motion, type Variants } from "framer-motion";
 import { useEffect, useState } from "react";
 import useDebounce from "~/hooks/useDebounce";
+import useIsClient from "~/hooks/useIsClient";
 import { cn } from "~/lib/utils";
-import URLBuilder from "~/models/urlBuilder";
 import { getSearchResults } from "~/server/actions/searchMoviesAction";
 import { type MovieSearchResults } from "~/server/schemas/tmdb";
-import Poster from "../_components/Poster";
+import SearchResult from "./_components/SearchResult";
 import Searchbar from "./_components/Searchbar";
-
-const childVariants: Variants = {
-    initial: {
-        y: 100,
-        opacity: 0,
-        transition: {
-            duration: 0.15,
-        },
-    },
-    open: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            duration: 0.15,
-        },
-    },
-    exit: {
-        y: 100,
-        opacity: 0,
-        transition: {
-            duration: 0.1,
-        },
-    },
-};
 
 const parentVariants: Variants = {
     initial: {
@@ -49,10 +25,7 @@ const parentVariants: Variants = {
         },
     },
     exit: {
-        transition: {
-            staggerChildren: 0.05,
-            staggerDirection: -1,
-        },
+        transition: {},
     },
 };
 
@@ -66,9 +39,19 @@ export default function Search() {
 
     const [userHasSearched, setUserHasSearched] = useState(false);
 
-    const [searchResults, setSearchResults] = useState<
+    const [searchResults, dangerouslySetSearchResults] = useState<
         MovieSearchResults["results"]
     >([]);
+    const [amountOfResults, setAmountOfResults] = useState<number | null>(null);
+
+    const [searchResultsKey, setSearchResultsKey] = useState<number>(0);
+
+    const isClient = useIsClient();
+
+    function setSearchResults(results: MovieSearchResults["results"]) {
+        dangerouslySetSearchResults(results);
+        setSearchResultsKey((prev) => prev + 1);
+    }
 
     useEffect(() => {
         // Set the URL search params to the search query
@@ -78,19 +61,26 @@ export default function Search() {
 
         if (debouncedSearchQuery.length === 0) {
             setSearchResults([]);
+            setAmountOfResults(null);
 
             return;
         }
 
-        void getSearchResults(debouncedSearchQuery).then(({ results }) => {
-            setSearchResults(results);
-        });
+        void getSearchResults(debouncedSearchQuery).then(
+            ({ results, total_results }) => {
+                setSearchResults(results);
+                setAmountOfResults(total_results);
+            },
+        );
     }, [debouncedSearchQuery]);
 
     function handleChangeSearchQuery(query: string) {
         setSearchQuery(query);
         setUserHasSearched(true);
     }
+
+    if (!isClient) return null;
+
     return (
         <main className="h-full w-full">
             {searchQuery.length === 0 && !userHasSearched ? (
@@ -129,37 +119,36 @@ export default function Search() {
                         value={searchQuery}
                         onChange={handleChangeSearchQuery}
                     />
-                    <motion.div
-                        className="grid grid-cols-6 gap-4"
-                        initial="initial"
-                        animate="open"
-                        exit="initial"
-                        variants={parentVariants}
-                        layout
-                        key={JSON.stringify(searchResults)}
-                    >
-                        {searchResults.map((movie) => (
-                            <motion.div
-                                className="h-full w-full"
-                                variants={childVariants}
-                                whileHover={{ scale: 1.1 }}
-                                key={movie.id}
-                                layoutId={movie.id.toString()}
-                            >
-                                <Poster
-                                    altText={movie.title}
-                                    imageSize="w342"
-                                    posterPath={movie.poster_path}
-                                    objectCover
-                                    href={URLBuilder.getMovieUrl({
-                                        movieId: movie.id,
-                                    })}
-                                />
-                            </motion.div>
-                        ))}
-                    </motion.div>
+                    {amountOfResults ? (
+                        <span>
+                            Showing
+                            <b>
+                                {amountOfResults === 10000 ? " more than" : ""}{" "}
+                                {amountOfResults} results
+                            </b>{" "}
+                            for &quot;
+                            {debouncedSearchQuery}&quot;
+                        </span>
+                    ) : null}
+                    <AnimatePresence mode="wait">
+                        <motion.div
+                            className="grid grid-cols-2 gap-4 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8"
+                            initial="initial"
+                            animate="open"
+                            exit="exit"
+                            variants={parentVariants}
+                            layout
+                            key={searchResultsKey}
+                        >
+                            {searchResults.map((movie) => (
+                                <SearchResult key={movie.id} movie={movie} />
+                            ))}
+                        </motion.div>
+                    </AnimatePresence>
                 </div>
             )}
         </main>
     );
 }
+
+Search.displayName = "Search";
