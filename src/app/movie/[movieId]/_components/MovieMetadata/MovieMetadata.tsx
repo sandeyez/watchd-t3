@@ -8,7 +8,7 @@ import { useMovie } from "../../_providers";
 export default function MovieMetadata() {
     const { genres, release_date, title, tagline, runtime } = useMovie();
 
-    const releaseDate = new Date(release_date);
+    const releaseDate = release_date ? new Date(release_date) : null;
 
     return (
         <div className="col-span-2 flex flex-col items-center justify-end text-center text-sm xs:col-span-1 xs:items-start xs:text-start">
@@ -24,32 +24,38 @@ export default function MovieMetadata() {
                 </span>
             )}
             <div className="flex w-fit items-center gap-2">
-                <motion.div
-                    className="group flex w-fit"
-                    initial="initial"
-                    animate="initial"
-                    whileHover="animate"
-                >
-                    <motion.span
-                        variants={{
-                            initial: {
-                                width: 0,
-                                paddingRight: 0,
-                            },
-                            animate: {
-                                width: "fit-content",
-                                paddingRight: 4,
-                            },
-                        }}
-                        className="overflow-hidden text-nowrap group-hover:w-fit"
+                {releaseDate ? (
+                    <motion.div
+                        className="group flex w-fit"
+                        initial="initial"
+                        animate="initial"
+                        whileHover="animate"
                     >
-                        {releaseDate.getDate()}{" "}
-                        {releaseDate.toLocaleString("en-US", { month: "long" })}
-                    </motion.span>
-                    <span className="h-fit">{releaseDate.getFullYear()}</span>
-                </motion.div>
-                {releaseDate && runtime && <span> • </span>}
-                {runtime && <span>{runtime} min</span>}
+                        <motion.span
+                            variants={{
+                                initial: {
+                                    width: 0,
+                                    paddingRight: 0,
+                                },
+                                animate: {
+                                    width: "fit-content",
+                                    paddingRight: 4,
+                                },
+                            }}
+                            className="overflow-hidden text-nowrap group-hover:w-fit"
+                        >
+                            {releaseDate.getDate()}{" "}
+                            {releaseDate.toLocaleString("en-US", {
+                                month: "long",
+                            })}
+                        </motion.span>
+                        <span className="h-fit">
+                            {releaseDate.getFullYear()}
+                        </span>
+                    </motion.div>
+                ) : null}
+                {releaseDate && runtime ? <span> • </span> : null}
+                {runtime && runtime > 0 ? <span>{runtime} min</span> : null}
             </div>
 
             <div className="flex flex-wrap items-center justify-center gap-2 pt-2 xs:justify-start">

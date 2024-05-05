@@ -46,7 +46,7 @@ function CheckInButton() {
             <Button
                 variant="default"
                 type="button"
-                className="max-h-10 w-full max-w-40 flex-grow"
+                className="max-h-10 w-full max-w-44 flex-grow"
                 onClick={() => setModalIsOpen(true)}
                 showPendingState
             >

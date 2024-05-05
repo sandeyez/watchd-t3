@@ -21,7 +21,7 @@ export const movieSchema = z.object({
             origin_country: z.string(),
         }),
     ),
-    release_date: z.string(),
+    release_date: z.string().nullable(),
     revenue: z.number(),
     runtime: z.number().nullable(),
     status: z.string(),

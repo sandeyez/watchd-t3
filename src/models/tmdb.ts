@@ -15,7 +15,7 @@ export default class TMDB {
         params?: Record<string, string>,
     ) {
         const res = await axios.get(
-            `${env.TMDB_API_BASE_URL}/${path}?language=en-US${params && Object.keys(params).length > 0 ? `&${new URLSearchParams(params).toString()}` : ""}`,
+            `${env.TMDB_API_BASE_URL}${path}?language=en-US${params && Object.keys(params).length > 0 ? `&${new URLSearchParams(params).toString()}` : ""}`,
             {
                 headers: {
                     Authorization: `Bearer ${env.TMDB_API_ACCESS_TOKEN}`,

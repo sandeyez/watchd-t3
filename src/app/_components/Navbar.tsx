@@ -82,7 +82,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="flex h-[72px] items-center justify-between gap-4 bg-primary px-6 py-4 md:grid md:grid-flow-col">
+        <nav className="flex min-h-[72px] items-center justify-between gap-4 bg-primary px-6 py-4 md:grid md:grid-flow-col">
             <Link
                 href="/"
                 className="flex h-fit items-center justify-center md:justify-start"
@@ -117,11 +117,13 @@ export default function Navbar() {
                 )}
             </div>
 
-            <FontAwesomeIcon
-                icon={isMenuOpen ? faClose : faBars}
-                className="h-6 w-6 cursor-pointer text-white md:hidden"
-                onClick={toggleMenu}
-            />
+            <div className="block md:hidden">
+                <FontAwesomeIcon
+                    icon={isMenuOpen ? faClose : faBars}
+                    className="h-6 w-6 cursor-pointer text-white"
+                    onClick={toggleMenu}
+                />
+            </div>
             <AnimatePresence initial={false} mode="wait">
                 {isMenuOpen && (
                     <>

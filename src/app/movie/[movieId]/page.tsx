@@ -49,13 +49,16 @@ export default async function MoviePage({
 }: {
     params: { movieId: string };
 }) {
-    const movie = await TMDB.getMovie({ movieId: params.movieId });
-    const credits = await TMDB.getMovieCredits({ movieId: params.movieId });
-    const recommendations = await TMDB.getRecommendedMovies({
-        movieId: params.movieId,
-    });
-
-    const isAddedToWatchlist = await isMovieInWatchlist({ movieId: movie.id });
+    const { movieId } = params;
+    const [movie, credits, recommendations, isAddedToWatchlist] =
+        await Promise.all([
+            TMDB.getMovie({ movieId: movieId }),
+            TMDB.getMovieCredits({ movieId: movieId }),
+            TMDB.getRecommendedMovies({
+                movieId: params.movieId,
+            }),
+            isMovieInWatchlist({ movieId: parseInt(movieId, 10) }),
+        ]);
 
     return (
         <MovieProviders movie={movie} credits={credits}>

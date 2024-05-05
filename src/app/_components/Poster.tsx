@@ -29,7 +29,7 @@ function Poster({
             condition={!!href}
             wrapper={(children) => <Link href={href!}>{children}</Link>}
         >
-            <div className="h-full w-full overflow-hidden rounded-lg">
+            <div className="relative h-full w-full overflow-hidden rounded-lg">
                 {posterPath !== null ? (
                     <Image
                         src={ImageHelper.getImageUrl({
