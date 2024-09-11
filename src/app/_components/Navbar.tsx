@@ -6,6 +6,7 @@ import {
     faFilm,
     faHome,
     faSearch,
+    faSpinner,
     faStar,
     type IconDefinition,
 } from "@fortawesome/free-solid-svg-icons";
@@ -104,20 +105,41 @@ export default function Navbar() {
                     ))}
                 </div>
                 <div className="hidden items-center justify-end md:flex">
-                    {status === "authenticated" ? (
-                        <Link href="/profile" className="text-white">
-                            <PersonAvatar
-                                src={data.user.image}
-                                altText="Profile picture"
-                                variant="small"
-                                withBorder
-                            />
-                        </Link>
-                    ) : (
-                        <Link href="/login" className="text-white">
-                            Login
-                        </Link>
-                    )}
+                    {(() => {
+                        switch (status) {
+                            case "authenticated":
+                                return (
+                                    <Link
+                                        href="/profile"
+                                        className="text-white"
+                                    >
+                                        <PersonAvatar
+                                            src={data.user.image}
+                                            altText="Profile picture"
+                                            variant="small"
+                                            withBorder
+                                        />
+                                    </Link>
+                                );
+
+                            case "loading":
+                                return (
+                                    <div className="grid size-8 place-items-center">
+                                        <FontAwesomeIcon
+                                            icon={faSpinner}
+                                            className="size-6 animate-spin"
+                                        />
+                                    </div>
+                                );
+
+                            case "unauthenticated":
+                                return (
+                                    <Link href="/login" className="text-white">
+                                        Login
+                                    </Link>
+                                );
+                        }
+                    })()}
                 </div>
 
                 <div className="block md:hidden">

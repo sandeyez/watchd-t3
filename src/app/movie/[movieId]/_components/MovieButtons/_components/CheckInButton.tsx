@@ -52,6 +52,7 @@ function CheckInButton() {
                 }
                 showPendingState
                 disabled={status !== "authenticated"}
+                loading={status === "loading"}
             >
                 Check-in
             </Button>

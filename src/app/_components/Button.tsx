@@ -46,6 +46,7 @@ interface ButtonProps
     children: React.ReactNode;
     showPendingState?: boolean;
     wide?: boolean;
+    loading?: boolean;
 }
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -59,6 +60,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             children,
             showPendingState = false,
             wide,
+            loading = false,
             ...props
         },
         ref,
@@ -95,8 +97,8 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
                     disabled={disabled || (pending && showPendingState)}
                     {...props}
                 >
-                    <div className="flex items-center justify-center gap-4">
-                        {pending && showPendingState && (
+                    <div className="flex items-center justify-center gap-2">
+                        {((pending && showPendingState) || loading) && (
                             <FontAwesomeIcon icon={faSpinner} spin />
                         )}
                         {children}
