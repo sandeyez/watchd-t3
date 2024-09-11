@@ -20,7 +20,7 @@ function CheckInButton() {
         release_date: releaseDate,
         runtime,
     } = useMovie();
-    const { data: sessionData } = useSession();
+    const { data: sessionData, status } = useSession();
 
     const [rating, setRating] = useState<number | null>(null);
     const [review, setReview] = useState<string>("");
@@ -47,8 +47,11 @@ function CheckInButton() {
                 variant="default"
                 type="button"
                 className="max-h-10 w-full max-w-44 flex-grow"
-                onClick={() => setModalIsOpen(true)}
+                onClick={() =>
+                    status === "authenticated" && setModalIsOpen(true)
+                }
                 showPendingState
+                disabled={status !== "authenticated"}
             >
                 Check-in
             </Button>
