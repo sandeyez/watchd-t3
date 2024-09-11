@@ -22,9 +22,14 @@ const placeholderMovies = [
 type SearchbarProps = {
     value: string;
     onChange: (query: string) => void;
+    loading: boolean;
 };
 
-export default function Searchbar({ value, onChange }: SearchbarProps) {
+export default function Searchbar({
+    value,
+    onChange,
+    loading,
+}: SearchbarProps) {
     const [placeholder, dangerouslySetPlaceholder] = useState("");
     const placeholderRef = useRef(placeholder);
 
@@ -117,6 +122,9 @@ export default function Searchbar({ value, onChange }: SearchbarProps) {
                 value={value}
                 onChange={handleChange}
                 autoFocus
+                after={
+                    <div className="h-8 w-8 animate-pulse rounded-full bg-red-300" />
+                }
             />
         </motion.div>
     );

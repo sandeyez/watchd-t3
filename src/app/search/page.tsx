@@ -10,6 +10,8 @@ import { getSearchResults } from "~/server/actions/searchMoviesAction";
 import { type MovieSearchResults } from "~/server/schemas/tmdb";
 import SearchResult from "./_components/SearchResult";
 import Searchbar from "./_components/Searchbar";
+import { ImageHelper } from "~/models/imageHelper";
+import useDebugger from "~/hooks/useDebugger";
 
 const parentVariants: Variants = {
     initial: {
@@ -36,6 +38,7 @@ export default function Search() {
             : "",
     );
     const debouncedSearchQuery = useDebounce(searchQuery, 500);
+    const [loading, setLoading] = useState(false);
 
     const [userHasSearched, setUserHasSearched] = useState(false);
 
@@ -47,6 +50,8 @@ export default function Search() {
     const [searchResultsKey, setSearchResultsKey] = useState<number>(0);
 
     const isClient = useIsClient();
+
+    useDebugger(loading);
 
     function setSearchResults(results: MovieSearchResults["results"]) {
         dangerouslySetSearchResults(results);
@@ -67,7 +72,22 @@ export default function Search() {
         }
 
         void getSearchResults(debouncedSearchQuery).then(
-            ({ results, total_results }) => {
+            async ({ results, total_results }) => {
+                await Promise.all(
+                    results.map((movie) => {
+                        if (!movie.poster_path) return;
+                        return new Promise<void>((resolve) => {
+                            const img = new Image();
+
+                            img.src = ImageHelper.getImageUrl({
+                                path: movie.poster_path!,
+                                type: "poster",
+                                size: "w342",
+                            })!;
+                            img.onload = () => resolve();
+                        });
+                    }),
+                );
                 setSearchResults(results);
                 setAmountOfResults(total_results);
             },
@@ -108,6 +128,7 @@ export default function Search() {
                                 <Searchbar
                                     value={searchQuery}
                                     onChange={handleChangeSearchQuery}
+                                    loading={loading}
                                 />
                             </>
                         )}
@@ -118,33 +139,41 @@ export default function Search() {
                     <Searchbar
                         value={searchQuery}
                         onChange={handleChangeSearchQuery}
+                        loading={loading}
                     />
-                    {amountOfResults ? (
-                        <span>
-                            Showing
-                            <b>
-                                {amountOfResults === 10000 ? " more than" : ""}{" "}
-                                {amountOfResults} results
-                            </b>{" "}
-                            for &quot;
-                            {debouncedSearchQuery}&quot;
-                        </span>
-                    ) : null}
-                    <AnimatePresence mode="wait">
-                        <motion.div
-                            className="grid grid-cols-2 gap-4 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8"
-                            initial="initial"
-                            animate="open"
-                            exit="exit"
-                            variants={parentVariants}
-                            layout
-                            key={searchResultsKey}
-                        >
-                            {searchResults.map((movie) => (
-                                <SearchResult key={movie.id} movie={movie} />
-                            ))}
-                        </motion.div>
-                    </AnimatePresence>
+                    <>
+                        {amountOfResults ? (
+                            <span>
+                                Showing
+                                <b>
+                                    {amountOfResults === 10000
+                                        ? " more than"
+                                        : ""}{" "}
+                                    {amountOfResults} results
+                                </b>{" "}
+                                for &quot;
+                                {debouncedSearchQuery}&quot;
+                            </span>
+                        ) : null}
+                        <AnimatePresence mode="wait">
+                            <motion.div
+                                className="grid grid-cols-2 gap-4 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-7 2xl:grid-cols-8"
+                                initial="initial"
+                                animate="open"
+                                exit="exit"
+                                variants={parentVariants}
+                                layout
+                                key={searchResultsKey}
+                            >
+                                {searchResults.map((movie) => (
+                                    <SearchResult
+                                        key={movie.id}
+                                        movie={movie}
+                                    />
+                                ))}
+                            </motion.div>
+                        </AnimatePresence>
+                    </>
                 </div>
             )}
         </main>
