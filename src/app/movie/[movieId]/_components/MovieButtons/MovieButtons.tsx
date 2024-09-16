@@ -4,11 +4,11 @@ import { faEarth, faShare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 import Button from "~/app/_components/Button";
-import { Skeleton } from "~/components/ui/skeleton";
 import { useMovie } from "../../_providers";
 import CheckInButton from "./_components/CheckInButton";
 import WatchlistButton from "./_components/WatchlistButton";
 import { useSession } from "next-auth/react";
+import { Skeleton } from "~/app/_components/Skeleton";
 
 type MovieButtonsProps = {
     isAddedToWatchlist: boolean;

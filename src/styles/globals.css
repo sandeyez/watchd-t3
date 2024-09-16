@@ -5,3 +5,11 @@
 .gradient-text {
     @apply inline-block h-fit w-fit bg-gradient-to-r from-gradientPink to-gradientBlue bg-clip-text text-transparent;
 }
+
+.hide-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}

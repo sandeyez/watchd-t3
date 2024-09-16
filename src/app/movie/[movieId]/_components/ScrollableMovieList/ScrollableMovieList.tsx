@@ -45,7 +45,7 @@ function ScrollableMovieList({
         <div className="relative min-h-48">
             <div className=" flex h-full w-full ">
                 <div
-                    className="absolute flex h-full w-full snap-x gap-2 overflow-x-scroll py-2"
+                    className="hide-scrollbar absolute flex h-full w-full snap-x gap-2 overflow-x-scroll py-2"
                     onScroll={handleScroll}
                 >
                     {results.map(({ id, title, poster_path }) => (
@@ -85,11 +85,11 @@ function ScrollableMovieList({
             </div>
             <motion.div
                 style={{ opacity: rightOverlayOpacity }}
-                className="pointer-events-none absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-r from-secondary/0 via-secondary/0 to-secondary/100"
+                className="pointer-events-none absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-r from-primary/0 via-primary/0 to-primary/100"
             />
             <motion.div
                 style={{ opacity: leftOverlayOpacity }}
-                className="pointer-events-none absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-r from-secondary/100 via-secondary/0 to-secondary/0"
+                className="pointer-events-none absolute left-0 top-0 z-10 h-full w-full bg-gradient-to-r from-primary/100 via-primary/0 to-primary/0"
             />
         </div>
     );

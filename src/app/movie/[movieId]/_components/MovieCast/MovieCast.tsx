@@ -1,5 +1,5 @@
 import PersonAvatar from "~/app/_components/PersonAvatar";
-import { Skeleton } from "~/components/ui/skeleton";
+import { Skeleton } from "~/app/_components/Skeleton";
 import { ImageHelper } from "~/models/imageHelper";
 import { type MovieCredits } from "~/server/schemas/tmdb";
 

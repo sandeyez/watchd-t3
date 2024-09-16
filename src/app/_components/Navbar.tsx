@@ -12,12 +12,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { AnimatePresence, motion } from "framer-motion";
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { toggleBodyScrolling } from "~/utils/react";
 import PersonAvatar from "./PersonAvatar";
+import { usePathname } from "next/navigation";
 
 type NavItemProps = {
     icon: IconDefinition;
@@ -32,7 +33,6 @@ function NavItem({ href, icon, title }: NavItemProps): JSX.Element {
                 className="flex items-center gap-3 text-white"
                 whileHover={{
                     scale: 1.1,
-                    translateY: -2,
                     transition: {
                         ease: "easeIn",
                         duration: 0.1,
@@ -53,7 +53,7 @@ const navItems: NavItemProps[] = [
     {
         icon: faHome,
         title: "Home",
-        href: "/",
+        href: "/home",
     },
     {
         icon: faFilm,
@@ -82,13 +82,21 @@ export default function Navbar() {
         setIsMenuOpen((prev) => !prev);
     };
 
+    const pathname = usePathname();
+    const [prevPathname, setPrevPathname] = useState(pathname);
+
+    if (prevPathname !== pathname) {
+        setIsMenuOpen(false);
+        setPrevPathname(pathname);
+    }
+
     return (
         <>
             <div className="block min-h-[72px] w-screen md:hidden"></div>
-            <nav className="fixed left-0 top-0 z-20 flex min-h-[72px] w-screen items-center justify-between gap-4 bg-primary px-6 py-4 md:static md:grid md:grid-flow-col">
+            <nav className="fixed left-0 top-0 z-20 grid min-h-[72px] grid-cols-3 content-center gap-4 bg-primary px-6 py-4 md:static md:grid md:grid-flow-col">
                 {/* Skeleton to use for screens smaller than md */}
                 <Link
-                    href="/"
+                    href="/home"
                     className="flex h-fit items-center justify-center md:justify-start"
                 >
                     <Image
@@ -97,6 +105,7 @@ export default function Navbar() {
                         height={24}
                         alt="Watchd logo"
                         className="h-6"
+                        priority
                     />
                 </Link>
                 <div className="hidden flex-grow flex-col items-center justify-start gap-8 pt-8 md:flex md:flex-row md:justify-center md:gap-12 md:pt-0">
@@ -112,6 +121,7 @@ export default function Navbar() {
                                     <Link
                                         href="/profile"
                                         className="text-white"
+                                        onClick={() => signOut()}
                                     >
                                         <PersonAvatar
                                             src={data.user.image}
@@ -166,7 +176,7 @@ export default function Navbar() {
                                 onClick={toggleMenu}
                             />
                             <motion.div
-                                className="fixed bottom-0 z-50 h-[calc(100dvh-72px)] w-[50vw] min-w-72 max-w-[100vw] bg-secondary"
+                                className="fixed bottom-0 z-50 h-[calc(100dvh-72px)] w-[50vw] min-w-72 max-w-96 bg-secondary"
                                 initial={{
                                     right: "-100%",
                                 }}

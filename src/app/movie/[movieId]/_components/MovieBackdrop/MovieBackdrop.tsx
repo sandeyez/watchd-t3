@@ -41,7 +41,7 @@ export default function MovieBackdrop() {
                             })}
                             alt=""
                             layout="fill"
-                            className="object-cover"
+                            className="object-cover object-[center_25%]"
                             priority
                             placeholder="blur"
                             blurDataURL={ImageHelper.getImageUrl({
@@ -53,7 +53,7 @@ export default function MovieBackdrop() {
                     )}
                 </div>
             </div>
-            <div className="absolute left-0 top-0 -z-10 h-full w-full bg-gradient-to-b from-primary/50 to-secondary" />
+            <div className="absolute left-0 top-0 -z-10 h-full w-full bg-gradient-to-b from-primary/50 to-primary" />
         </motion.div>
     );
 }

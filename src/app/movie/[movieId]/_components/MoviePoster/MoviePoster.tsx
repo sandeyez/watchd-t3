@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Poster from "~/app/_components/Poster";
-import { Skeleton } from "~/components/ui/skeleton";
+import { Skeleton } from "~/app/_components/Skeleton";
 import { ImageHelper } from "~/models/imageHelper";
 import { formatCurrency } from "~/utils/format";
 import { useMovie, useMovieCredits } from "../../_providers";

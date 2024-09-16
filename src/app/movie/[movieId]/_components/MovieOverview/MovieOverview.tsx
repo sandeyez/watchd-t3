@@ -1,6 +1,6 @@
 import { type Movie, type MovieRecommendations } from "~/server/schemas/tmdb";
 import ScrollableMovieList from "../ScrollableMovieList/ScrollableMovieList";
-import { Skeleton } from "~/components/ui/skeleton";
+import { Skeleton } from "~/app/_components/Skeleton";
 
 type MovieOverviewProps = {
     overview: Movie["overview"];
@@ -18,15 +18,17 @@ export default function MovieOverview({
                 <p className="text-justify text-sm">{overview}</p>
             </article>
 
-            <article>
-                <h2 className="text-lg font-bold">Recommended movies</h2>
-                <ScrollableMovieList
-                    results={recommendations.filter(
-                        ({ media_type }) => media_type === "movie",
-                    )}
-                    allowClick
-                />
-            </article>
+            {recommendations.length > 0 && (
+                <article>
+                    <h2 className="text-lg font-bold">Recommended movies</h2>
+                    <ScrollableMovieList
+                        results={recommendations.filter(
+                            ({ media_type }) => media_type === "movie",
+                        )}
+                        allowClick
+                    />
+                </article>
+            )}
         </div>
     );
 }

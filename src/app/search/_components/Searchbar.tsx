@@ -25,11 +25,7 @@ type SearchbarProps = {
     loading: boolean;
 };
 
-export default function Searchbar({
-    value,
-    onChange,
-    loading,
-}: SearchbarProps) {
+export default function Searchbar({ value, onChange }: SearchbarProps) {
     const [placeholder, dangerouslySetPlaceholder] = useState("");
     const placeholderRef = useRef(placeholder);
 

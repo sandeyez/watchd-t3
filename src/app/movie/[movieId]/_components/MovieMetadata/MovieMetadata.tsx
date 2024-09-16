@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Tag from "~/app/_components/Tag";
-import { Skeleton } from "~/components/ui/skeleton";
+import { Skeleton } from "~/app/_components/Skeleton";
 import { useMovie } from "../../_providers";
 
 export default function MovieMetadata() {

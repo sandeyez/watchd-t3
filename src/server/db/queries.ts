@@ -4,8 +4,9 @@ import { getServerSession } from "next-auth/next";
 import { db } from ".";
 import { review, watchlistItem } from "./schema";
 import { authOptions } from "../auth";
-import { and, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import TMDB from "~/models/tmdb";
 
 function revalidatePathIfExist(path: string | undefined) {
     if (path) {
@@ -97,6 +98,30 @@ export async function removeFromWatchlist({
     }
 
     revalidatePathIfExist(pathToRevalidate);
+}
+
+export async function getWatchlistMovies(limit?: number, offset?: number) {
+    const session = await getServerSession(authOptions);
+
+    if (!session) {
+        return [];
+    }
+
+    const watchlistMovies = await db.query.watchlistItem.findMany({
+        where: (watchlistItem, { eq }) =>
+            eq(watchlistItem.userId, session.user.id),
+        orderBy: [desc(watchlistItem.createdAt)],
+        limit,
+        offset,
+    });
+
+    return await Promise.all(
+        watchlistMovies.map((movie) =>
+            TMDB.getMovie({
+                movieId: movie.movieId.toString(),
+            }),
+        ),
+    );
 }
 
 export async function isMovieInWatchlist({ movieId }: { movieId: number }) {

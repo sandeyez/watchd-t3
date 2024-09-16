@@ -3,17 +3,17 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import { motion, type HTMLMotionProps } from "framer-motion";
 import { forwardRef } from "react";
-import {
-    Tooltip,
-    TooltipContent,
-    TooltipProvider,
-    TooltipTrigger,
-} from "~/components/ui/tooltip";
 import { cn } from "~/lib/utils";
 import RenderInWrapperIf from "./RenderInWrapperIf";
 import { useFormStatus } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+} from "./tooltip";
 
 const buttonVariants = cva(
     "flex items-center justify-center whitespace-nowrap rounded-md animation-lift text-sm font-medium ring-offset-secondary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50",

@@ -88,4 +88,22 @@ export default class TMDB {
             return notFound();
         }
     }
+
+    static async getNowPlayingMovies() {
+        try {
+            const res = await this.makeRequest(
+                `/movie/now_playing?language=en-US&page=1`,
+            );
+
+            const parsedNowPlayingMovies = movieSearchResultsSchema.parse(
+                res.data,
+            );
+
+            return parsedNowPlayingMovies;
+        } catch (err) {
+            console.error(err);
+
+            return notFound();
+        }
+    }
 }
